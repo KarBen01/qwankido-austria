@@ -46,8 +46,8 @@ import karinRitzmeierImg from '../assets/images/trainer/Karin-Ritzmeier-Stocker.
 import renateWinklbauerImg from '../assets/images/trainer/Renate-Winklbauer.jpeg';
 import mandySteinbergerImg from '../assets/images/trainer/Mandy-Steinberger.jpeg';
 
-// Import documents
-import tamTheSilberclubPdf from '../assets/documents/tam-the-silberclub.pdf?url';
+// PDF path from public folder
+const tamTheSilberclubPdf = '/documents/tam-the-silberclub.pdf';
 
 export const CLUBS = [
     {

@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -6,37 +7,35 @@ interface Props {
     title: string;
 }
 
-const { title } = Astro.props;
+const {title} = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Qwan Ki Do Österreich - Sino-Vietnamesische Kampfkunst" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Qwan Ki Do Österreich - Sino-Vietnamesische Kampfkunst"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="icon" type="image/png" sizes="32x32" href={`${baseUrl}/favicon.png`}/>
+    <link rel="icon" type="image/png" sizes="16x16" href={`${baseUrl}/favicon-16x16.png`}/>
+    <link rel="apple-touch-icon" sizes="180x180" href={`${baseUrl}/apple-touch-icon.png`}/>
+    <meta name="generator" content={Astro.generator}/>
     <title>{title} | Qwan Ki Do Austria</title>
-
-    <!-- Facebook SDK -->
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v18.0">
-    </script>
-</head>
+    <ClientRouter /></head>
 <body class="bg-white text-slate-800 font-sans min-h-screen flex flex-col">
-<!--
-    client:load ist wichtig, damit React im Browser geladen wird
-    und das Mobile-Menü funktioniert.
--->
-<Header client:load />
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v18.0">
+</script>
+
+<Header client:load/>
 
 <main class="flex-grow pt-20">
     <!-- slot ist der Platzhalter für den Inhalt der jeweiligen Seite -->
-    <slot />
+    <slot/>
 </main>
 
-<Footer />
+<Footer/>
 </body>
 </html>

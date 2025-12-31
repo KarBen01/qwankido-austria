@@ -12,11 +12,11 @@ import {
     getUpcomingTrainingChanges
 } from '../data/siteData.js';
 
-// Import PDFs from assets (use ?url to get the actual URL path)
-import aufnahmeformularPdf from '../assets/documents/QKDATAufnahmeformular.pdf?url';
-import trainingsordnungPdf from '../assets/documents/QKDATRahmenbedingungenTrainingsordnung.pdf?url';
-import datenschutzPdf from '../assets/documents/QKDATDatenschutzbestimmung.pdf?url';
-import einwilligungPdf from '../assets/documents/QKDATEinwilligung-Fotos-und-Notfallkontakt.pdf?url';
+// PDF paths from public folder
+const aufnahmeformularPdf = '/documents/QKDATAufnahmeformular.pdf';
+const trainingsordnungPdf = '/documents/QKDATRahmenbedingungenTrainingsordnung.pdf';
+const datenschutzPdf = '/documents/QKDATDatenschutzbestimmung.pdf';
+const einwilligungPdf = '/documents/QKDATEinwilligung-Fotos-und-Notfallkontakt.pdf';
 import {
     ArrowRight,
     MapPin,

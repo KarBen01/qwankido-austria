@@ -11,6 +11,11 @@ export default defineConfig({
     site: 'https://karben01.github.io',
     base: '/qwankido-austria',
 
+    prefetch: {
+        prefetchAll: true,
+        defaultStrategy: 'hover'
+    },
+
     integrations: [react()],
 
     vite: {
