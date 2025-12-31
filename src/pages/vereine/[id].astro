@@ -13,6 +13,7 @@ export function getStaticPaths() {
 
 const { club } = Astro.props;
 const contactEmail = "office@qwankido.at";
+const BASE_URL = import.meta.env.BASE_URL;
 
 // Helper: Gruppiere Trainingszeiten nach Tag
 const groupedDays: Record<string, any[]> = club.days ? club.days.reduce((acc: Record<string, any[]>, curr: any) => {
@@ -56,7 +57,7 @@ const otherClubs = [...rawOtherClubs, ...rawOtherClubs, ...rawOtherClubs];
         <div class="relative h-[350px] sm:h-[400px] md:h-[450px]">
             <img
                     id="hero-image"
-                    src={club.image}
+                    src={typeof club.image === 'string' ? club.image : club.image.src}
                     class="w-full h-full object-cover"
                     alt={club.name}
             />
@@ -64,7 +65,7 @@ const otherClubs = [...rawOtherClubs, ...rawOtherClubs, ...rawOtherClubs];
 
             <!-- ZURÜCK BUTTON (Absolut Oben Links) -->
             <div class="absolute top-4 left-4 sm:top-8 sm:left-8 z-30">
-                <a href="/vereine" class="inline-flex items-center gap-2 text-white hover:text-red-400 font-bold uppercase tracking-wider transition px-4 py-2.5 rounded-full bg-slate-900/40 hover:bg-slate-900/80 border border-white/10 backdrop-blur-md text-xs sm:text-sm">
+                <a href={`${BASE_URL}/vereine`} class="inline-flex items-center gap-2 text-white hover:text-red-400 font-bold uppercase tracking-wider transition px-4 py-2.5 rounded-full bg-slate-900/40 hover:bg-slate-900/80 border border-white/10 backdrop-blur-md text-xs sm:text-sm">
                     <ArrowLeft size={16} className="text-white" /> <span class="hidden sm:inline">Alle Vereine</span>
                 </a>
             </div>
@@ -77,7 +78,7 @@ const otherClubs = [...rawOtherClubs, ...rawOtherClubs, ...rawOtherClubs];
                         {/* Logo Bild: Groß und mit Schatten, kein Rahmen */}
                         <img
                                 id="club-logo"
-                                src={`${club.logo}`}
+                                src={typeof club.logo === 'string' ? club.logo : club.logo.src}
                                 alt={`${club.name} Wappen`}
                                 class="w-32 h-32 object-contain drop-shadow-2xl transform transition duration-500 group-hover:scale-105"
                         />
@@ -115,7 +116,7 @@ const otherClubs = [...rawOtherClubs, ...rawOtherClubs, ...rawOtherClubs];
 
                         {/* Redirect Button für pausierte Vereine */}
                         {club.redirectTo && (
-                                <a href={`/vereine/${club.redirectTo}`} class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md text-sm uppercase tracking-wide mb-5">
+                                <a href={`${BASE_URL}/vereine/${club.redirectTo}`} class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md text-sm uppercase tracking-wide mb-5">
                                     Zu Wien Thach Su <ChevronRight size={16} />
                                 </a>
                         )}
@@ -362,7 +363,7 @@ const otherClubs = [...rawOtherClubs, ...rawOtherClubs, ...rawOtherClubs];
                                     <!-- Slider -->
                                     <div id="club-slider" class="flex overflow-x-auto gap-4 pb-4 px-1 scrollbar-hide snap-x snap-mandatory scroll-smooth w-full">
                                         {otherClubs.map((oc: any) => (
-                                                <a href={`/vereine/${oc.id}`} class="min-w-[92%] sm:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)] snap-center bg-white rounded-xl p-5 border border-slate-200 hover:border-red-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/card flex flex-col justify-between shrink-0 h-32 relative overflow-hidden">
+                                                <a href={`${BASE_URL}/vereine/${oc.id}`} class="min-w-[92%] sm:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)] snap-center bg-white rounded-xl p-5 border border-slate-200 hover:border-red-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/card flex flex-col justify-between shrink-0 h-32 relative overflow-hidden">
                                                     <div class="z-10 relative">
                                                         <h4 class="font-bold text-slate-900 group-hover/card:text-red-700 transition text-lg mb-1">{oc.name}</h4>
                                                         <p class="text-xs text-slate-500 flex items-center gap-1.5"><MapPin size={12}/> {oc.district}</p>

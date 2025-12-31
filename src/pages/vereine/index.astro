@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import {CLUBS} from '../../data/siteData.js';
 import {MapPin, Clock, Users, Euro, ArrowRight, ExternalLink} from 'lucide-react';
+
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Vereine">
@@ -15,7 +17,7 @@ import {MapPin, Clock, Users, Euro, ArrowRight, ExternalLink} from 'lucide-react
             <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                 {CLUBS.map(club => {
                     const linkTarget = club.externalLink ? "_blank" : "_self";
-                    const linkHref = club.externalLink ? club.externalLink : `/vereine/${club.id}`;
+                    const linkHref = club.externalLink ? club.externalLink : `${BASE_URL}/vereine/${club.id}`;
 
                     return (
                             <a href={linkHref} target={linkTarget}
@@ -23,7 +25,7 @@ import {MapPin, Clock, Users, Euro, ArrowRight, ExternalLink} from 'lucide-react
                                 {/* Image Header */}
                                 <div class="h-44 sm:h-48 bg-slate-200 relative overflow-hidden flex-shrink-0">
                                     <img
-                                            src={club.image}
+                                            src={typeof club.image === 'string' ? club.image : club.image.src}
                                             class="w-full h-full object-cover"
                                             alt={club.name}
                                     />

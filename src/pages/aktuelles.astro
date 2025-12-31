@@ -13,6 +13,14 @@ import {
     getUpcomingTrainingChanges,
     getUpcomingImportantDates
 } from '../data/siteData.js';
+
+const BASE_URL = import.meta.env.BASE_URL;
+
+// Process highlights to add BASE_URL to PDF links
+const validHighlights = getValidHighlights().map(highlight => ({
+    ...highlight,
+    link: highlight.link ? `${BASE_URL}${highlight.link}` : highlight.link
+}));
 ---
 
 <Layout title="Aktuelles">
@@ -27,10 +35,10 @@ import {
             </div>
 
             <!-- Highlights Section -->
-            {getValidHighlights().length > 0 && (
+            {validHighlights.length > 0 && (
                 <section class="mb-16">
                     <h2 class="text-2xl font-bold text-slate-900 mb-6">Wichtige Ankündigungen</h2>
-                    <Highlights highlights={getValidHighlights()} client:load/>
+                    <Highlights highlights={validHighlights} client:load/>
                 </section>
             )}
 
@@ -115,7 +123,7 @@ import {
 
             <!-- Navigation -->
             <div class="mt-8 text-center">
-                <a href="/vereine" class="text-slate-600 hover:text-red-600 transition text-sm font-medium">
+                <a href={`${BASE_URL}/vereine`} class="text-slate-600 hover:text-red-600 transition text-sm font-medium">
                     ← Zurück zur Vereinsübersicht
                 </a>
             </div>

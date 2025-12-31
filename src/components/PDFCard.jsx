@@ -15,6 +15,10 @@ export default function PDFCard({href, iconName, title, subtitle, colSpan = ""})
     const isDisabled = href === "#";
     const Icon = iconMap[iconName] || FileText;
 
+    // Handle both string paths and imported asset objects
+    // PDFs imported with ?url should be strings with the correct bundled path
+    const pdfUrl = typeof href === 'object' && href !== null ? (href.src || href.default || href) : href;
+
     // Lock body scroll when modal is open
     useEffect(() => {
         if (showPreview) {
@@ -44,7 +48,7 @@ export default function PDFCard({href, iconName, title, subtitle, colSpan = ""})
     return (
         <>
             <a
-                href={href}
+                href={pdfUrl}
                 onClick={handleClick}
                 className={`${cardClasses} ${colSpan}`}
                 {...(!isDisabled && {target: "_blank"})}
@@ -78,7 +82,7 @@ export default function PDFCard({href, iconName, title, subtitle, colSpan = ""})
                             <h3 className="font-bold text-slate-900 truncate pr-4">{title}</h3>
                             <div className="flex items-center gap-2">
                                 <a
-                                    href={href}
+                                    href={pdfUrl}
                                     target="_blank"
                                     className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition flex items-center gap-2 text-sm"
                                 >
@@ -98,7 +102,7 @@ export default function PDFCard({href, iconName, title, subtitle, colSpan = ""})
                         {/* PDF Viewer */}
                         <div className="w-full h-full pt-16">
                             <iframe
-                                src={`${href}#view=FitH`}
+                                src={`${pdfUrl}#view=FitH`}
                                 className="w-full h-full border-0"
                                 title={`PDF Preview: ${title}`}
                             />

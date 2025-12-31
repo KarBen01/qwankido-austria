@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Menu, X} from 'lucide-react';
+import logoImg from '../assets/images/logo.png';
+
+const BASE_URL = import.meta.env.BASE_URL;
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,10 +20,10 @@ export default function Header() {
     }, []);
 
     const navItems = [
-        {label: 'Home', path: '/'},
-        {label: 'Vereine', path: '/vereine'},
-        {label: 'Trainer', path: '/trainer'},
-        {label: 'Aktuelles', path: '/aktuelles'},
+        {label: 'Home', path: `${BASE_URL}/`},
+        {label: 'Vereine', path: `${BASE_URL}/vereine`},
+        {label: 'Trainer', path: `${BASE_URL}/trainer`},
+        {label: 'Aktuelles', path: `${BASE_URL}/aktuelles`},
     ];
 
     return (
@@ -32,9 +35,9 @@ export default function Header() {
                 <div className="flex justify-between items-center h-14">
 
                     {/* Logo Area */}
-                    <a href="/" className="flex items-center gap-3 group">
+                    <a href={`${BASE_URL}/`} className="flex items-center gap-3 group">
                         <img
-                            src="/images/logo.png"
+                            src={logoImg.src}
                             alt="Qwan Ki Do Logo"
                             className="w-12 h-12 rounded-full object-cover hover:scale-105 transition shadow-sm"
                             onError={(e) => {
@@ -62,7 +65,7 @@ export default function Header() {
                                 key={item.path}
                                 href={item.path}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                                    (item.path === '/' && currentPath === '/') || (item.path !== '/' && currentPath.startsWith(item.path))
+                                    currentPath === item.path || (item.path !== `${BASE_URL}/` && currentPath.startsWith(item.path))
                                         ? 'text-red-700 bg-red-50'
                                         : 'text-slate-600 hover:text-red-700 hover:bg-slate-50'
                                 }`}

@@ -25,7 +25,7 @@ const teamTrainers = TRAINERS.filter(t => !t.highlight);
                         <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 flex flex-col md:flex-row">
                             <div class="md:w-2/5 h-64 sm:h-80 md:h-auto relative bg-slate-200">
                                 <img
-                                        src={headTrainer.image}
+                                        src={typeof headTrainer.image === 'string' ? headTrainer.image : headTrainer.image.src}
                                         alt={headTrainer.name}
                                         class="absolute inset-0 w-full h-full object-cover object-top"
                                 />
@@ -87,7 +87,7 @@ const teamTrainers = TRAINERS.filter(t => !t.highlight);
                                 {/* Bild Container - Rechteckig Oben */}
                                 <div class="h-48 sm:h-64 overflow-hidden relative bg-slate-100">
                                     <img
-                                            src={trainer.image}
+                                            src={typeof trainer.image === 'string' ? trainer.image : trainer.image.src}
                                             alt={trainer.name}
                                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                                     />

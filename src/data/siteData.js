@@ -1,5 +1,54 @@
 // src/data/siteData.js
 
+// Import all logos
+import wienThachSuLogo from '../assets/images/logos/wien-thach-su.png';
+import pandasLogo from '../assets/images/logos/pandas.png';
+import wienLongHoLogo from '../assets/images/logos/wien-long-ho.png';
+import wienLongTienLogo from '../assets/images/logos/wien-long-tien.png';
+import hanhPhucLongLogo from '../assets/images/logos/hanh-phuc-long.png';
+import wienThuyXaLogo from '../assets/images/logos/wien-thuy-xa.png';
+import wienDuongLangLogo from '../assets/images/logos/wien-duong-lang.png';
+import wienerNeustadtLogo from '../assets/images/logos/wiener-neustadt.png';
+
+// Import all hero backgrounds
+import wienThachSuBg from '../assets/images/hero-backgrounds/wien-thach-su.jpg';
+import pandasBg from '../assets/images/hero-backgrounds/pandas.jpg';
+import wienLongHoBg from '../assets/images/hero-backgrounds/wien-long-ho.jpg';
+import wienLongTienBg from '../assets/images/hero-backgrounds/wien-long-tien.jpeg';
+import hanhPhucLongBg from '../assets/images/hero-backgrounds/hanh-phuc-long.jpg';
+import wienThuyXaBg from '../assets/images/hero-backgrounds/wien-thuy-xa.jpg';
+import wienDuongLangBg from '../assets/images/hero-backgrounds/wien-duong-lang.jpg';
+
+// Import all trainer images
+import florinFragaImg from '../assets/images/trainer/Florin-Fraga.jpeg';
+import mateiCapatuImg from '../assets/images/trainer/Matei-Capatu.png';
+import muhammadKabbaniImg from '../assets/images/trainer/Muhammad-Kabbani.jpg';
+import florianHuberImg from '../assets/images/trainer/Florian-Huber.jpg';
+import yusufKabbaniImg from '../assets/images/trainer/Yusuf-Kabbani.jpg';
+import ninoMozgaFragaImg from '../assets/images/trainer/Nino-Mozga-Fraga.jpg';
+import davidKarafiatImg from '../assets/images/trainer/David-Karafiat.jpg';
+import lorenzHinterbergerImg from '../assets/images/trainer/Lorenz-Hinterberger.jpg';
+import tinaKollerImg from '../assets/images/trainer/Tina-Koller.jpg';
+import sabineHuberImg from '../assets/images/trainer/Sabine-Huber.jpg';
+import abduKabbaniImg from '../assets/images/trainer/Abdu-Kabbani.jpg';
+import benjaminKarafiatImg from '../assets/images/trainer/Benjamin-Karafiat.png';
+import raphaelGagglImg from '../assets/images/trainer/Rafael-Gaggl.jpg';
+import yasminGabrielImg from '../assets/images/trainer/Yasmin-Gabriel.png';
+import juliaMarquetantImg from '../assets/images/trainer/Julia-Marquetant.jpg';
+import patrickTanznerImg from '../assets/images/trainer/Patrick-Tanzner.jpeg';
+import danielUlrichImg from '../assets/images/trainer/Daniel-Ulrich.jpeg';
+import angeloFragaImg from '../assets/images/trainer/Angelo-Fraga.jpeg';
+import dennisStoianImg from '../assets/images/trainer/Dennis-Stoian.jpeg';
+import dominikTanznerImg from '../assets/images/trainer/Dominik-Tanzner.jpeg';
+import adaHamblinImg from '../assets/images/trainer/Ada-Hamblin.jpeg';
+import silviaHallerImg from '../assets/images/trainer/Silvia-Haller-Praetorius.jpeg';
+import karinRitzmeierImg from '../assets/images/trainer/Karin-Ritzmeier-Stocker.jpeg';
+import renateWinklbauerImg from '../assets/images/trainer/Renate-Winklbauer.jpeg';
+import mandySteinbergerImg from '../assets/images/trainer/Mandy-Steinberger.jpeg';
+
+// Import documents
+import tamTheSilberclubPdf from '../assets/documents/tam-the-silberclub.pdf?url';
+
 export const CLUBS = [
     {
         id: "wien-thach-su",
@@ -41,8 +90,8 @@ export const CLUBS = [
         },
         trainer: "Minh Sư Florin Fraga",
         audience: "Kinder, Jugend & Erwachsene",
-        logo: "/images/logos/wien-thach-su.png",
-        image: "/images/hero-backgrounds/wien-thach-su.jpg",
+        logo: wienThachSuLogo,
+        image: wienThachSuBg,
         description: "Der größte Verein in Wien (seit 2006) mit einem breiten Angebot von den 'Pandas' für die Kleinsten bis hin zum Wettkampftraining und Tam The."
     },
     {
@@ -67,8 +116,8 @@ export const CLUBS = [
         },
         trainer: "Team",
         audience: "Kinder (4-6 Jahre)",
-        logo: "/images/logos/pandas.png",
-        image: "/images/hero-backgrounds/pandas.jpg",
+        logo: pandasLogo,
+        image: pandasBg,
         description: "Spielerisches Training speziell für unsere Kleinsten (4-6 Jahre) zur Förderung der Motorik und Koordination."
     },
     {
@@ -97,8 +146,8 @@ export const CLUBS = [
         },
         trainer: "Minh Sư Florin Fraga",
         audience: "Kinder, Jugend & Erwachsene",
-        logo: "/images/logos/wien-long-ho.png",
-        image: "/images/hero-backgrounds/wien-long-ho.jpg",
+        logo: wienLongHoLogo,
+        image: wienLongHoBg,
         description: "Unser Verein in der Donaustadt besteht seit 2005. Wir bieten traditionelles Training für Kinder, Jugendliche und Erwachsene an."
     },
     {
@@ -124,8 +173,8 @@ export const CLUBS = [
         },
         trainer: "Minh Sư Florin Fraga",
         audience: "Kinder (ab 7 Jahre)",
-        logo: "/images/logos/wien-long-tien.png",
-        image: "/images/hero-backgrounds/wien-long-tien.jpeg",
+        logo: wienLongTienLogo,
+        image: wienLongTienBg,
         description: "Qwan Ki Do Training im 17. Bezirk (Hernals). Wir fördern Bewegung und Koordination für Kinder in einer motivierenden Umgebung."
     },
     {
@@ -142,8 +191,8 @@ export const CLUBS = [
         prices: null,
         trainer: "Minh Sư Florin Fraga",
         audience: "Auswahlkader",
-        logo: "/images/logos/hanh-phuc-long.png",
-        image: "/images/hero-backgrounds/hanh-phuc-long.jpg",
+        logo: hanhPhucLongLogo,
+        image: hanhPhucLongBg,
         description: "Das Training im Verein Hanh Phuc Long ist für vom technischen Leiter Österreichs ausgewählte SchülerInnen gedacht. Hier werden besonders engagierten SchülerInnen spezielle Techniken außerhalb des regulären Angebots gezeigt."
     },
     {
@@ -161,8 +210,8 @@ export const CLUBS = [
         trainer: "Minh Sư Florin Fraga",
         audience: "Pausiert",
         redirectTo: "wien-thach-su", // Redirect to Thach Su
-        logo: "/images/logos/wien-thuy-xa.png",
-        image: "/images/hero-backgrounds/wien-thuy-xa.jpg",
+        logo: wienThuyXaLogo,
+        image: wienThuyXaBg,
         description: "⚠️ Derzeit findet kein eigenes Training statt. Interessenten sind herzlich eingeladen, bei Wien Thach Su mitzutrainieren."
     },
     {
@@ -179,8 +228,8 @@ export const CLUBS = [
         prices: null,
         trainer: "Minh Sư Florin Fraga",
         audience: "Schul-intern",
-        logo: "/images/logos/wien-duong-lang.png",
-        image: "/images/hero-backgrounds/wien-duong-lang.jpg",
+        logo: wienDuongLangLogo,
+        image: wienDuongLangBg,
         description: "Dieses Training findet im Rahmen einer schulischen Kooperation statt und ist nicht öffentlich zugänglich."
     },
     {
@@ -197,7 +246,7 @@ export const CLUBS = [
         prices: null,
         trainer: "Minh Sư Florin Fraga",
         audience: "Kinder, Jugend & Erwachsene",
-        logo: "/images/logos/wiener-neustadt.png",
+        logo: wienerNeustadtLogo,
         image: "https://images.unsplash.com/photo-1517438476312-10d79c077509?q=80&w=1000&auto=format&fit=crop",
         description: "Unser Standort in Niederösterreich."
     }
@@ -218,7 +267,7 @@ export const TRAINERS = [
             "PHONG VE/SELBSTVERTEIDIGUNG höchstes Level-Meisterprüfung seit 2016",
             "Jiu Jitsu 1. Dan"
         ],
-        image: "/images/trainer/Florin-Fraga.jpeg",
+        image: florinFragaImg,
         highlight: true
     },
     {
@@ -226,168 +275,168 @@ export const TRAINERS = [
         name: "Vo Su Matei Capatu",
         rank: "3. Dang",
         role: "Sekretariat & Trainer",
-        image: "/images/trainer/Matei-Capatu.png"
+        image: mateiCapatuImg
     },
     {
         id: 3,
         name: "Vo Su Muhammad Kabbani",
         rank: "4. Dang",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Muhammad-Kabbani.jpg"
+        image: muhammadKabbaniImg
     },
     {
         id: 4,
         name: "Vo Su Florian Huber",
         rank: "3. Dang",
         role: "Kassier & Trainer Long Ho",
-        image: "/images/trainer/Florian-Huber.jpg"
+        image: florianHuberImg
     },
     {
         id: 5,
         name: "Vo Su Yusuf Kabbani",
         rank: "3. Dang",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Yusuf-Kabbani.jpg"
+        image: yusufKabbaniImg
     },
     {
         id: 6,
         name: "Vo Su Nino Mozga-Fraga",
         rank: "3. Dang",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Nino-Mozga-Fraga.jpg"
+        image: ninoMozgaFragaImg
     },
     {
         id: 7,
         name: "Vo Su David Karafiat",
         rank: "3. Dang",
         role: "Trainer Thuy Xa",
-        image: "/images/trainer/David-Karafiat.jpg"
+        image: davidKarafiatImg
     },
     {
         id: 8,
         name: "Huan Su Lorenz Hinterberger",
         rank: "2. Dang",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Lorenz-Hinterberger.jpg"
+        image: lorenzHinterbergerImg
     },
     {
         id: 9,
         name: "Huan Su Tina Koller",
         rank: "2. Dang",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Tina-Koller.jpg"
+        image: tinaKollerImg
     },
     {
         id: 10,
         name: "Huan Su Sabine Huber",
         rank: "2. Dang",
         role: "Sekretär & Trainer Long Ho",
-        image: "/images/trainer/Sabine-Huber.jpg"
+        image: sabineHuberImg
     },
     {
         id: 11,
         name: "Huan Su Abdu Kabbani",
         rank: "2. Dang",
         role: "Trainer Thuy Xa",
-        image: "/images/trainer/Abdu-Kabbani.jpg"
+        image: abduKabbaniImg
     },
     {
         id: 12,
         name: "Huan Su Benjamin Karafiat",
         rank: "2. Dang",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Benjamin-Karafiat.png"
+        image: benjaminKarafiatImg
     },
     {
         id: 13,
         name: "Huan Su Raphael Gaggl",
         rank: "2. Dang",
         role: "Trainer Am Duong",
-        image: "/images/trainer/Rafael-Gaggl.jpg"
+        image: raphaelGagglImg
     },
     {
         id: 14,
         name: "Huan Su Yasmin Gabriel",
         rank: "1. Dang",
         role: "Trainer Am Duong",
-        image: "/images/trainer/Yasmin-Gabriel.png"
+        image: yasminGabrielImg
     },
     {
         id: 15,
         name: "Huan Su Julia Marquetant",
         rank: "1. Dang",
         role: "Trainer Am Duong",
-        image: "/images/trainer/Julia-Marquetant.jpg"
+        image: juliaMarquetantImg
     },
     {
         id: 16,
         name: "Huan Su Patrick Tanzner",
         rank: "1. Dang",
         role: "Trainer Am Duong",
-        image: "/images/trainer/Patrick-Tanzner.jpeg"
+        image: patrickTanznerImg
     },
     {
         id: 17,
         name: "Huan Su Daniel Ulrich",
         rank: "1. Dang",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Daniel-Ulrich.jpeg"
+        image: danielUlrichImg
     },
     {
         id: 18,
         name: "Huan Su Angelo Fraga",
         rank: "Schwarzgurt",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Angelo-Fraga.jpeg"
+        image: angeloFragaImg
     },
     {
         id: 19,
         name: "Huan Su Dennis Stoian",
         rank: "Schwarzgurt",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Dennis-Stoian.jpeg"
+        image: dennisStoianImg
     },
     {
         id: 20,
         name: "Huan Su Dominik Tanzner",
         rank: "Schwarzgurt",
         role: "Trainer Am Duong",
-        image: "/images/trainer/Dominik-Tanzner.jpeg"
+        image: dominikTanznerImg
     },
     {
         id: 21,
         name: "Huan Su Ada Hamblin",
         rank: "Schwarzgurt",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Ada-Hamblin.jpeg"
+        image: adaHamblinImg
     },
     {
         id: 22,
         name: "Huan Su Silvia Haller-Prätorius",
         rank: "Schwarzgurt",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Silvia-Haller-Praetorius.jpeg"
+        image: silviaHallerImg
     },
     {
         id: 23,
         name: "Huan Su Karin Ritzmeier-Stocker",
         rank: "Schwarzgurt",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Karin-Ritzmeier-Stocker.jpeg"
+        image: karinRitzmeierImg
     },
     {
         id: 24,
         name: "Huan Su Renate Winklbauer",
         rank: "Schwarzgurt",
         role: "Trainer",
-        image: "/images/trainer/Renate-Winklbauer.jpeg"
+        image: renateWinklbauerImg
     },
     {
         id: 25,
         name: "Huan Su Mandy Steinberger",
         rank: "Schwarzgurt",
         role: "Trainer Thach Su",
-        image: "/images/trainer/Mandy-Steinberger.jpeg"
+        image: mandySteinbergerImg
     }
 ];
 
@@ -471,7 +520,7 @@ export const HIGHLIGHTS = [
             {label: "Fokus", value: "Mobilität & Gesundheit", icon: "Star"}
         ],
         fullText: "Der Tam The Silberclub richtet sich speziell an Menschen über 50, die ihre Mobilität erhalten und verbessern möchten. Mit sanften Bewegungsformen aus dem Tam The fördern wir Gesundheit, Balance und Wohlbefinden in einer entspannten Atmosphäre.",
-        link: "/documents/tam-the-silberclub.pdf",
+        link: tamTheSilberclubPdf,
         images: [
             "https://images.unsplash.com/photo-1544367563-12123d8d5e64?q=80&w=800&auto=format&fit=crop"
         ],

@@ -11,6 +11,12 @@ import {
     getUpcomingEvents,
     getUpcomingTrainingChanges
 } from '../data/siteData.js';
+
+// Import PDFs from assets (use ?url to get the actual URL path)
+import aufnahmeformularPdf from '../assets/documents/QKDATAufnahmeformular.pdf?url';
+import trainingsordnungPdf from '../assets/documents/QKDATRahmenbedingungenTrainingsordnung.pdf?url';
+import datenschutzPdf from '../assets/documents/QKDATDatenschutzbestimmung.pdf?url';
+import einwilligungPdf from '../assets/documents/QKDATEinwilligung-Fotos-und-Notfallkontakt.pdf?url';
 import {
     ArrowRight,
     MapPin,
@@ -32,8 +38,16 @@ import {
 
 // --- PERFORMANCE UPDATE: Astro Assets ---
 import {Image} from 'astro:assets';
-// WICHTIG: Du musst ein Bild namens 'hero-bg.jpg' in 'src/assets/' ablegen!
 import heroBg from '../assets/hero-bg.jpg';
+
+const BASE_URL = import.meta.env.BASE_URL;
+// WICHTIG: Du musst ein Bild namens 'hero-bg.jpg' in 'src/assets/' ablegen!
+
+// Process highlights to add BASE_URL to PDF links
+const validHighlights = getValidHighlights().map(highlight => ({
+    ...highlight,
+    link: highlight.link ? `${BASE_URL}${highlight.link}` : highlight.link
+}));
 
 // Helper für Monatsnamen
 const getMonthName = (monthStr) => {
@@ -72,7 +86,7 @@ const getMonthName = (monthStr) => {
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/vereine"
+                <a href={`${BASE_URL}/vereine`}
                    class="w-full sm:w-auto bg-red-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-red-700 hover:scale-105 transition-all duration-300 shadow-xl shadow-red-900/40 flex items-center justify-center gap-2">
                     Verein finden
                 </a>
@@ -90,7 +104,7 @@ const getMonthName = (monthStr) => {
 
             <!-- Highlights (Important Announcements) -->
             <div class="mb-12">
-                <Highlights highlights={getValidHighlights()} client:load/>
+                <Highlights highlights={validHighlights} client:load/>
             </div>
 
             <!-- Kommende Termine (Events) -->
@@ -100,7 +114,7 @@ const getMonthName = (monthStr) => {
                         <Calendar className="text-red-600"/>
                         Kommende Termine
                     </h2>
-                    <a href="/aktuelles"
+                    <a href={`${BASE_URL}/aktuelles`}
                        class="text-sm font-bold text-slate-500 hover:text-red-600 transition flex items-center gap-1">
                         Alle ansehen
                         <ArrowRight size={16}/>
@@ -241,7 +255,7 @@ const getMonthName = (monthStr) => {
             <!-- Download Grid (Consistent Icons, Light Theme) -->
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <PDFCard
-                        href="/documents/QKDATAufnahmeformular.pdf"
+                        href={`${BASE_URL}${aufnahmeformularPdf}`}
                         iconName="PenTool"
                         title="Aufnahmeformular"
                         subtitle="PDF Download"
@@ -249,7 +263,7 @@ const getMonthName = (monthStr) => {
                 />
 
                 <PDFCard
-                        href="/documents/QKDATRahmenbedingungenTrainingsordnung.pdf"
+                        href={`${BASE_URL}${trainingsordnungPdf}`}
                         iconName="Scale"
                         title="Trainingsordnung"
                         subtitle="PDF Download"
@@ -257,7 +271,7 @@ const getMonthName = (monthStr) => {
                 />
 
                 <PDFCard
-                        href="/documents/QKDATDatenschutzbestimmung.pdf"
+                        href={`${BASE_URL}${datenschutzPdf}`}
                         iconName="Shield"
                         title="Datenschutz"
                         subtitle="PDF Download"
@@ -265,7 +279,7 @@ const getMonthName = (monthStr) => {
                 />
 
                 <PDFCard
-                        href="/documents/QKDATEinwilligung-Fotos-und-Notfallkontakt.pdf"
+                        href={`${BASE_URL}${einwilligungPdf}`}
                         iconName="Camera"
                         title="Einwilligung Fotos & Notfallkontakt"
                         subtitle="PDF Download • Wichtig für Kinder & Medienfreigabe"
