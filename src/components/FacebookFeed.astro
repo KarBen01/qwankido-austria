@@ -1,0 +1,47 @@
+---
+---
+<div id="fb-root"></div>
+
+<div class="fb-page"
+     data-href="https://www.facebook.com/qwankidoaustria"
+     data-tabs="timeline"
+     data-width="500"
+     data-height="700"
+     data-small-header="false"
+     data-adapt-container-width="true"
+     data-hide-cover="false"
+     data-show-facepile="false">
+    <blockquote cite="https://www.facebook.com/qwankidoaustria" class="fb-xfbml-parse-ignore">
+        <a href="https://www.facebook.com/qwankidoaustria" class="text-red-600 hover:underline font-semibold">
+            Qwan Ki Do Austria auf Facebook
+        </a>
+    </blockquote>
+</div>
+
+<script is:inline>
+    // Initialize function to load or reset FB
+    function initFacebook() {
+        if (window.FB) {
+            // If FB is already loaded, tell it to parse the new DOM elements
+            // inside the current page
+            window.FB.XFBML.parse();
+        } else {
+            // First load: Inject the script
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v18.0";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        }
+    }
+
+    // LISTENER: Runs on initial load AND after every View Transition
+    document.addEventListener('astro:page-load', () => {
+        // Short timeout ensures the DOM is fully settled before FB tries to render
+        setTimeout(initFacebook, 100);
+    });
+</script>
+---

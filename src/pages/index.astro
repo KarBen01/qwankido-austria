@@ -4,6 +4,7 @@ import Highlights from '../components/Highlights.jsx';
 import EventCard from '../components/EventCard.jsx';
 import TrainingChangeCard from '../components/TrainingChangeCard.jsx';
 import PDFCard from '../components/PDFCard.jsx';
+import FacebookFeed from '../components/FacebookFeed.astro'; // NEW COMPONENT
 import {
     EVENTS,
     TRAINING_CHANGES,
@@ -17,6 +18,7 @@ const aufnahmeformularPdf = '/documents/QKDATAufnahmeformular.pdf';
 const trainingsordnungPdf = '/documents/QKDATRahmenbedingungenTrainingsordnung.pdf';
 const datenschutzPdf = '/documents/QKDATDatenschutzbestimmung.pdf';
 const einwilligungPdf = '/documents/QKDATEinwilligung-Fotos-und-Notfallkontakt.pdf';
+
 import {
     ArrowRight,
     MapPin,
@@ -41,26 +43,15 @@ import {Image} from 'astro:assets';
 import heroBg from '../assets/hero-bg.jpg';
 
 const BASE_URL = import.meta.env.BASE_URL;
-// WICHTIG: Du musst ein Bild namens 'hero-bg.jpg' in 'src/assets/' ablegen!
 
 // Process highlights to add BASE_URL to PDF links
 const validHighlights = getValidHighlights().map(highlight => ({
     ...highlight,
     link: highlight.link ? `${BASE_URL}${highlight.link}` : highlight.link
 }));
-
-// Helper für Monatsnamen
-const getMonthName = (monthStr) => {
-    const months = {
-        "01": "JAN", "02": "FEB", "03": "MÄR", "04": "APR", "05": "MAI", "06": "JUN",
-        "07": "JUL", "08": "AUG", "09": "SEP", "10": "OKT", "11": "NOV", "12": "DEZ"
-    };
-    return months[monthStr] || monthStr;
-};
 ---
 
 <Layout title="Home">
-    <!-- HERO SECTION -->
     <section
             class="relative min-h-[500px] sm:min-h-[600px] md:h-[650px] flex items-center justify-center text-center px-4 overflow-hidden bg-slate-900">
         <div class="absolute inset-0 z-0">
@@ -87,6 +78,7 @@ const getMonthName = (monthStr) => {
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href={`${BASE_URL}/vereine`}
+                   data-astro-prefetch
                    class="w-full sm:w-auto bg-red-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-red-700 hover:scale-105 transition-all duration-300 shadow-xl shadow-red-900/40 flex items-center justify-center gap-2">
                     Verein finden
                 </a>
@@ -98,16 +90,13 @@ const getMonthName = (monthStr) => {
         </div>
     </section>
 
-    <!-- SECTION 1: DASHBOARD (Highlights & Termine) -->
     <section class="py-16 px-4 bg-slate-50 relative z-10 border-t border-slate-200">
         <div class="max-w-6xl mx-auto -mt-24">
 
-            <!-- Highlights (Important Announcements) -->
             <div class="mb-12">
                 <Highlights highlights={validHighlights} client:load/>
             </div>
 
-            <!-- Kommende Termine (Events) -->
             <div class="mb-12">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
@@ -115,6 +104,7 @@ const getMonthName = (monthStr) => {
                         Kommende Termine
                     </h2>
                     <a href={`${BASE_URL}/aktuelles`}
+                       data-astro-prefetch
                        class="text-sm font-bold text-slate-500 hover:text-red-600 transition flex items-center gap-1">
                         Alle ansehen
                         <ArrowRight size={16}/>
@@ -122,31 +112,31 @@ const getMonthName = (monthStr) => {
                 </div>
 
                 <div class="grid gap-4">
+                    {/* REMOVED client:load to improve performance */}
                     {getUpcomingEvents().slice(0, 5).map((event) => (
-                        <EventCard event={event} client:load/>
+                            <EventCard event={event}/>
                     ))}
                 </div>
             </div>
 
-            <!-- Training Changes (if any upcoming) -->
             {getUpcomingTrainingChanges().length > 0 && (
-                <div class="mb-12">
-                    <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2 mb-6">
-                        <AlertCircle className="text-amber-600"/>
-                        Training Änderungen
-                    </h2>
-                    <div class="grid gap-4">
-                        {getUpcomingTrainingChanges().slice(0, 3).map((change) => (
-                            <TrainingChangeCard change={change} client:load/>
-                        ))}
+                    <div class="mb-12">
+                        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2 mb-6">
+                            <AlertCircle className="text-amber-600"/>
+                            Training Änderungen
+                        </h2>
+                        <div class="grid gap-4">
+                            {/* REMOVED client:load to improve performance */}
+                            {getUpcomingTrainingChanges().slice(0, 3).map((change) => (
+                                    <TrainingChangeCard change={change}/>
+                            ))}
+                        </div>
                     </div>
-                </div>
             )}
 
         </div>
     </section>
 
-    <!-- SECTION 2: SOCIAL / FACEBOOK FEED -->
     <section class="py-20 px-4 bg-white border-t border-slate-100">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12">
@@ -166,27 +156,10 @@ const getMonthName = (monthStr) => {
                 </a>
             </div>
 
-            <!-- Facebook Page Plugin Container - Centered & Responsive -->
-            <div class="w-full sm:w-[500px] sm:mx-auto">
-                <div class="fb-page"
-                     data-href="https://www.facebook.com/qwankidoaustria"
-                     data-tabs="timeline"
-                     data-width="500"
-                     data-height="700"
-                     data-small-header="false"
-                     data-adapt-container-width="true"
-                     data-hide-cover="false"
-                     data-show-facepile="false">
-                    <blockquote cite="https://www.facebook.com/qwankidoaustria" class="fb-xfbml-parse-ignore">
-                        <a href="https://www.facebook.com/qwankidoaustria"
-                           class="text-red-600 hover:underline font-semibold">
-                            Qwan Ki Do Austria auf Facebook
-                        </a>
-                    </blockquote>
-                </div>
+            <div class="w-full sm:w-[500px] sm:mx-auto min-h-[700px]">
+                <FacebookFeed/>
             </div>
 
-            <!-- Mobile Optimization Note -->
             <div class="mt-6 text-center">
                 <p class="text-xs text-slate-500">
                     💡 Auf mobilen Geräten nach unten scrollen für mehr Beiträge
@@ -195,7 +168,6 @@ const getMonthName = (monthStr) => {
         </div>
     </section>
 
-    <!-- NEWSLETTER SECTION (Mailjet Integrated) -->
     <section class="py-20 px-4 bg-slate-900 text-white relative overflow-hidden">
         <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
 
@@ -209,7 +181,6 @@ const getMonthName = (monthStr) => {
                 dein Postfach.
             </p>
 
-            <!-- Mailjet Widget Container -->
             <div class="bg-white rounded-xl shadow-2xl p-2 max-w-xl mx-auto overflow-hidden">
                 <div class="overflow-hidden">
                     <iframe
@@ -228,7 +199,6 @@ const getMonthName = (monthStr) => {
         </div>
     </section>
 
-    <!-- DOWNLOADS & INFOS (Main Section) -->
     <section id="infos" class="py-20 px-4 bg-slate-50 border-t border-slate-200">
         <div class="max-w-5xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-12">
@@ -243,7 +213,6 @@ const getMonthName = (monthStr) => {
                     </p>
                 </div>
 
-                <!-- Wichtiger Hinweis über die ganze Breite -->
                 <div class="bg-white border border-red-200 p-5 rounded-2xl shadow-sm inline-block">
                     <p class="text-slate-800 font-medium flex flex-col sm:flex-row items-center justify-center gap-3 text-sm sm:text-base">
                         <AlertCircle size={24} className="text-red-600 shrink-0"/>
@@ -252,14 +221,12 @@ const getMonthName = (monthStr) => {
                 </div>
             </div>
 
-            <!-- Download Grid (Consistent Icons, Light Theme) -->
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <PDFCard
                         href={`${BASE_URL}${aufnahmeformularPdf}`}
                         iconName="PenTool"
                         title="Aufnahmeformular"
                         subtitle="PDF Download"
-                        client:only="react"
                 />
 
                 <PDFCard
@@ -267,7 +234,6 @@ const getMonthName = (monthStr) => {
                         iconName="Scale"
                         title="Trainingsordnung"
                         subtitle="PDF Download"
-                        client:only="react"
                 />
 
                 <PDFCard
@@ -275,7 +241,6 @@ const getMonthName = (monthStr) => {
                         iconName="Shield"
                         title="Datenschutz"
                         subtitle="PDF Download"
-                        client:only="react"
                 />
 
                 <PDFCard
@@ -284,17 +249,14 @@ const getMonthName = (monthStr) => {
                         title="Einwilligung Fotos & Notfallkontakt"
                         subtitle="PDF Download • Wichtig für Kinder & Medienfreigabe"
                         colSpan="sm:col-span-2 md:col-span-3"
-                        client:only="react"
                 />
 
-                <!-- Placeholder for missing PDF -->
                 <PDFCard
                         href="#"
                         iconName="FileText"
                         title="Weiteres Dokument"
                         subtitle="Folgt in Kürze"
                         colSpan="sm:col-span-2 md:col-span-3"
-                        client:only="react"
                 />
             </div>
         </div>
