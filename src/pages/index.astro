@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Highlights from '../components/Highlights.jsx';
 import EventCard from '../components/EventCard.jsx';
 import TrainingChangeCard from '../components/TrainingChangeCard.jsx';
+import PDFCard from '../components/PDFCard.jsx';
 import {
     EVENTS,
     TRAINING_CHANGES,
@@ -239,60 +240,48 @@ const getMonthName = (monthStr) => {
 
             <!-- Download Grid (Consistent Icons, Light Theme) -->
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <a href="#"
-                   class="flex items-start gap-4 p-4 rounded-xl bg-white hover:border-red-300 hover:shadow-md border border-slate-200 transition group">
-                    <div class="bg-slate-100 group-hover:bg-red-50 p-3 rounded-lg text-slate-600 group-hover:text-red-600 transition-colors shrink-0">
-                        <PenTool size={20}/>
-                    </div>
-                    <div>
-                        <span class="block font-bold text-sm text-slate-900 group-hover:text-red-700 transition">Aufnahmeformular</span>
-                        <span class="block text-xs text-slate-500 mt-1">PDF Download</span>
-                    </div>
-                </a>
+                <PDFCard
+                        href="/documents/QKDATAufnahmeformular.pdf"
+                        iconName="PenTool"
+                        title="Aufnahmeformular"
+                        subtitle="PDF Download"
+                        client:only="react"
+                />
 
-                <a href="#"
-                   class="flex items-start gap-4 p-4 rounded-xl bg-white hover:border-red-300 hover:shadow-md border border-slate-200 transition group">
-                    <div class="bg-slate-100 group-hover:bg-red-50 p-3 rounded-lg text-slate-600 group-hover:text-red-600 transition-colors shrink-0">
-                        <Scale size={20}/>
-                    </div>
-                    <div>
-                        <span class="block font-bold text-sm text-slate-900 group-hover:text-red-700 transition">Trainingsordnung</span>
-                        <span class="block text-xs text-slate-500 mt-1">PDF Download</span>
-                    </div>
-                </a>
+                <PDFCard
+                        href="/documents/QKDATRahmenbedingungenTrainingsordnung.pdf"
+                        iconName="Scale"
+                        title="Trainingsordnung"
+                        subtitle="PDF Download"
+                        client:only="react"
+                />
 
-                <a href="#"
-                   class="flex items-start gap-4 p-4 rounded-xl bg-white hover:border-red-300 hover:shadow-md border border-slate-200 transition group">
-                    <div class="bg-slate-100 group-hover:bg-red-50 p-3 rounded-lg text-slate-600 group-hover:text-red-600 transition-colors shrink-0">
-                        <Shield size={20}/>
-                    </div>
-                    <div>
-                        <span class="block font-bold text-sm text-slate-900 group-hover:text-red-700 transition">Datenschutz</span>
-                        <span class="block text-xs text-slate-500 mt-1">PDF Download</span>
-                    </div>
-                </a>
+                <PDFCard
+                        href="/documents/QKDATDatenschutzbestimmung.pdf"
+                        iconName="Shield"
+                        title="Datenschutz"
+                        subtitle="PDF Download"
+                        client:only="react"
+                />
 
-                <a href="#"
-                   class="flex items-start gap-4 p-4 rounded-xl bg-white hover:border-red-300 hover:shadow-md border border-slate-200 transition group">
-                    <div class="bg-slate-100 group-hover:bg-red-50 p-3 rounded-lg text-slate-600 group-hover:text-red-600 transition-colors shrink-0">
-                        <Camera size={20}/>
-                    </div>
-                    <div>
-                        <span class="block font-bold text-sm text-slate-900 group-hover:text-red-700 transition">Einwilligung Medien</span>
-                        <span class="block text-xss text-slate-500 mt-1">PDF Download</span>
-                    </div>
-                </a>
+                <PDFCard
+                        href="/documents/QKDATEinwilligung-Fotos-und-Notfallkontakt.pdf"
+                        iconName="Camera"
+                        title="Einwilligung Fotos & Notfallkontakt"
+                        subtitle="PDF Download • Wichtig für Kinder & Medienfreigabe"
+                        colSpan="sm:col-span-2 md:col-span-3"
+                        client:only="react"
+                />
 
-                <a href="#"
-                   class="flex items-start gap-4 p-4 rounded-xl bg-white hover:border-red-300 hover:shadow-md border border-slate-200 transition group sm:col-span-2 md:col-span-2">
-                    <div class="bg-slate-100 group-hover:bg-red-50 p-3 rounded-lg text-slate-600 group-hover:text-red-600 transition-colors shrink-0">
-                        <Phone size={20}/>
-                    </div>
-                    <div>
-                        <span class="block font-bold text-sm text-slate-900 group-hover:text-red-700 transition">Notfallkontakt</span>
-                        <span class="block text-xs text-slate-500 mt-1">PDF Download • Wichtig für Kinder</span>
-                    </div>
-                </a>
+                <!-- Placeholder for missing PDF -->
+                <PDFCard
+                        href="#"
+                        iconName="FileText"
+                        title="Weiteres Dokument"
+                        subtitle="Folgt in Kürze"
+                        colSpan="sm:col-span-2 md:col-span-3"
+                        client:only="react"
+                />
             </div>
         </div>
     </section>
