@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { TRAINERS } from '../data/siteData.js';
+import { User, Award, Shield } from 'lucide-react';
+
+// Wir trennen den Haupt-Trainer (Minh Su) vom Rest, falls er 'highlight: true' hat
+const headTrainer = TRAINERS.find(t => t.highlight);
+const teamTrainers = TRAINERS.filter(t => !t.highlight);
+---
+
+<Layout title="Trainer">
+    <div class="bg-slate-50 min-h-screen pb-20 pt-12">
+        <div class="max-w-6xl mx-auto px-4">
+
+            <div class="text-center mb-16">
+                <h1 class="text-4xl font-bold mb-4 text-slate-900">Unser Trainerteam</h1>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg">
+                    Erfahrene Schwarzgurte und zertifizierte Instruktoren begleiten dich auf deinem Weg im Qwan Ki Do.
+                </p>
+            </div>
+
+            {/* 1. SECTION: TECHNISCHE LEITUNG (Große Feature Card) */}
+            {headTrainer && (
+                    <div class="mb-20">
+                        <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 flex flex-col md:flex-row">
+                            <div class="md:w-2/5 h-64 sm:h-80 md:h-auto relative bg-slate-200">
+                                <img
+                                        src={headTrainer.image}
+                                        alt={headTrainer.name}
+                                        class="absolute inset-0 w-full h-full object-cover object-top"
+                                />
+                                <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 md:hidden">
+                                    <h2 class="text-2xl font-bold text-white">{headTrainer.name}</h2>
+                                    <p class="text-red-400 font-bold">{headTrainer.rank}</p>
+                                </div>
+                            </div>
+
+                            <div class="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                                <div class="mb-4">
+                              <span class="bg-red-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2 mb-4">
+                                <Award size={14} /> Technische Leitung
+                              </span>
+                                    <h2 class="hidden md:block text-3xl md:text-4xl font-bold text-slate-900 mb-2">{headTrainer.name}</h2>
+                                    <p class="hidden md:block text-xl text-red-700 font-semibold mb-6">{headTrainer.rank}</p>
+                                </div>
+
+                                {Array.isArray(headTrainer.bio) ? (
+                                    <ul class="text-slate-600 text-base leading-relaxed mb-8 space-y-2">
+                                        {headTrainer.bio.map(item => (
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-red-600 mt-1.5">•</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p class="text-slate-600 text-lg leading-relaxed mb-8">
+                                        {headTrainer.bio}
+                                    </p>
+                                )}
+
+                                <div class="grid grid-cols-1 min-[375px]:grid-cols-2 gap-4 text-sm font-semibold text-slate-700">
+                                    <div class="flex items-center gap-2 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                        <Shield size={18} className="text-red-600"/> Internationaler Schiedsrichter
+                                    </div>
+                                    <div class="flex items-center gap-2 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                        <User size={18} className="text-red-600"/> Staatl. Gepr. Instructor
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            )}
+
+            {/* 2. SECTION: DAS TEAM (Grid Layout) */}
+            <div>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-px bg-slate-200 flex-grow"></div>
+                    <h3 class="text-xl font-bold text-slate-400 uppercase tracking-widest">Vereinsleitung & Instruktoren</h3>
+                    <div class="h-px bg-slate-200 flex-grow"></div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                    {teamTrainers.map(trainer => (
+                            <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group">
+
+                                {/* Bild Container - Rechteckig Oben */}
+                                <div class="h-48 sm:h-64 overflow-hidden relative bg-slate-100">
+                                    <img
+                                            src={trainer.image}
+                                            alt={trainer.name}
+                                            class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    {/* Overlay Gradient unten im Bild für bessere Textlesbarkeit falls nötig, hier clean gelassen */}
+                                </div>
+
+                                {/* Content Bereich */}
+                                <div class="p-5 flex flex-col flex-grow">
+                                    <h4 class="font-bold text-slate-900 mb-1 leading-tight">
+                                        {(() => {
+                                            // Extract degree number from rank
+                                            const rankMatch = trainer.rank.match(/(\d+)\.\s*Dang/i);
+                                            let title = '';
+                                            let displayName = trainer.name;
+
+                                            if (rankMatch) {
+                                                const degree = parseInt(rankMatch[1]);
+                                                if (degree === 1 || degree === 2) {
+                                                    title = 'Huan Su';
+                                                } else if (degree === 3 || degree === 4) {
+                                                    title = 'Vo Su';
+                                                } else if (degree === 5) {
+                                                    title = 'Tao Su';
+                                                } else if (degree === 6) {
+                                                    title = 'Minh Su';
+                                                } else if (degree === 7) {
+                                                    title = 'Guam Su';
+                                                }
+
+                                                // Remove title from name if it exists
+                                                const titlePrefixes = ['Minh Su', 'Vo Su', 'Huan Su', 'Tao Su', 'Guam Su'];
+                                                for (const prefix of titlePrefixes) {
+                                                    if (displayName.startsWith(prefix + ' ')) {
+                                                        displayName = displayName.substring(prefix.length + 1);
+                                                        break;
+                                                    }
+                                                }
+                                            } else if (trainer.rank.toLowerCase().includes('schwarzgurt')) {
+                                                // Black belt without Dang
+                                                title = 'Huan Su';
+                                                const titlePrefixes = ['Minh Su', 'Vo Su', 'Huan Su', 'Tao Su', 'Guam Su'];
+                                                for (const prefix of titlePrefixes) {
+                                                    if (displayName.startsWith(prefix + ' ')) {
+                                                        displayName = displayName.substring(prefix.length + 1);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            if (title) {
+                                                return (
+                                                    <>
+                                                        <span class="text-sm block uppercase tracking-wide text-slate-600">{title}</span>
+                                                        <span class="text-base block">{displayName}</span>
+                                                    </>
+                                                );
+                                            } else {
+                                                return <span class="text-lg">{displayName}</span>;
+                                            }
+                                        })()}
+                                    </h4>
+                                    <p class="text-red-700 text-sm font-semibold mb-3">{trainer.rank}</p>
+
+                                    <div class="mt-auto pt-4 border-t border-slate-50">
+                                        <p class="text-xs text-slate-500 uppercase tracking-wide font-medium flex items-start gap-2">
+                                            <span class="shrink-0 mt-0.5"><User size={12}/></span>
+                                            {trainer.role}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                    ))}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</Layout>

@@ -1,0 +1,71 @@
+---
+import {Facebook, Instagram} from 'lucide-react';
+---
+
+<footer class="bg-slate-900 text-slate-400 mt-auto border-t border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+        <div class="col-span-1 md:col-span-2 text-center md:text-left">
+            <span class="text-white font-bold text-lg mb-6 block">Qwan Ki Do Austria</span>
+
+            <!-- World Union Sektion -->
+            <div class="flex items-center justify-center md:justify-start gap-4 mb-6">
+                <div class="bg-white/5 p-1 rounded-full border border-white/10 shrink-0">
+                    <!--
+                        WICHTIG: Lege das Logo als 'wuqkd_logo.png' in 'public/images/' ab.
+                        Ideal ist eine quadratische oder runde Version.
+                    -->
+                    <img
+                            src="/images/wuqkd_logo.png"
+                            alt="World Union of Qwan Ki Do Logo"
+                            class="w-14 h-14 object-contain opacity-90 hover:opacity-100 transition"
+                    />
+                </div>
+                <p class="text-slate-500 leading-relaxed text-xs sm:text-sm">
+                    Offizielles Mitglied der<br/>
+                    <strong class="text-slate-300">World Union of Qwan Ki Do</strong><br/>
+                    ZVR: 108300119
+                </p>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 grid grid-cols-2 gap-6 md:gap-8">
+            <div>
+                <h4 class="text-white font-bold mb-4">Navigation</h4>
+                <ul class="space-y-3">
+                    <li><a href="/vereine" class="hover:text-red-500 transition block">Unsere Vereine</a></li>
+                    <li><a href="/trainer" class="hover:text-red-500 transition block">Trainerteam</a></li>
+                    <li><a href="/aktuelles" class="hover:text-red-500 transition block">News & Termine</a></li>
+                </ul>
+            </div>
+
+            <div class="text-right">
+                <h4 class="text-white font-bold mb-4">Rechtliches</h4>
+                <ul class="space-y-3">
+                    <li><a href="/impressum" class="hover:text-red-500 transition block">Impressum</a></li>
+                    <li><a href="/datenschutz" class="hover:text-red-500 transition block">Datenschutz</a></li>
+                    <li><a href="mailto:office@qwankido.at" class="hover:text-red-500 transition block">Kontakt
+                        aufnehmen</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-slate-950 py-6 border-t border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-slate-600">
+                &copy; {new Date().getFullYear()} Qwan Ki Do Austria. Alle Rechte vorbehalten.
+            </p>
+
+            <div class="flex gap-3">
+                <a href="https://facebook.com/qwankidoaustria" target="_blank"
+                   class="hover:text-white hover:bg-blue-600 transition bg-slate-800 text-slate-400 p-2.5 rounded-lg">
+                    <Facebook size={18}/>
+                </a>
+                <a href="https://instagram.com/qwankidoaustria" target="_blank"
+                   class="hover:text-white hover:bg-pink-600 transition bg-slate-800 text-slate-400 p-2.5 rounded-lg">
+                    <Instagram size={18}/>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>

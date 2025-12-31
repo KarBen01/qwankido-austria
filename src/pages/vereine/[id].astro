@@ -1,0 +1,520 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { CLUBS } from '../../data/siteData.js';
+import { ArrowLeft, Clock, MapPin, Mail, User, CheckCircle2, CreditCard, Award, Copy, Wallet, ChevronRight, ChevronLeft, Info, Check, Shield } from 'lucide-react';
+
+export function getStaticPaths() {
+    // Filtere Vereine mit externem Link aus, da diese keine Detailseite brauchen
+    return CLUBS.filter(c => !c.externalLink).map(club => ({
+        params: { id: club.id },
+        props: { club },
+    }));
+}
+
+const { club } = Astro.props;
+const contactEmail = "office@qwankido.at";
+
+// Helper: Gruppiere Trainingszeiten nach Tag
+const groupedDays: Record<string, any[]> = club.days ? club.days.reduce((acc: Record<string, any[]>, curr: any) => {
+    if (!acc[curr.day]) acc[curr.day] = [];
+    acc[curr.day].push(curr);
+    return acc;
+}, {} as Record<string, any[]>) : {};
+
+const hasTrainings = club.days && club.days.length > 0;
+const hasPrices = club.prices !== null;
+// IBAN nur anzeigen wenn vorhanden UND nicht leer
+const hasBank = club.iban && club.iban !== "";
+
+// Helper für Grid-Spalten: Dynamisch basierend auf Anzahl der Tage
+const dayCount = Object.keys(groupedDays).length;
+const gridClass = dayCount === 1
+    ? 'grid-cols-1'
+    : dayCount === 2
+        ? 'grid-cols-1 md:grid-cols-2'
+        : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+
+// Helper für Grid-Spalten der KARTE selbst
+const getCardColSpan = (slots: any[]) => slots.length > 3 ? 'md:col-span-2' : 'md:col-span-1';
+
+// Helper für das INNERE Grid der Karte
+const getContentGridClass = (slots: any[]) => slots.length > 3 ? 'grid sm:grid-cols-2 gap-x-8 gap-y-4' : 'flex flex-col gap-4';
+
+// "Andere Vereine" Logik: Wir vervielfachen die Liste für den Infinite-Effekt
+const rawOtherClubs = CLUBS
+    .filter(c => c.id !== club.id && !c.externalLink)
+    .sort(() => 0.5 - Math.random());
+
+// Wir klonen die Liste, damit genug Content zum Scrollen da ist
+const otherClubs = [...rawOtherClubs, ...rawOtherClubs, ...rawOtherClubs];
+---
+
+<Layout title={club.name}>
+    <div class="bg-slate-100 min-h-screen pb-16 relative">
+
+        <!-- HERO SECTION -->
+        <div class="relative h-[350px] sm:h-[400px] md:h-[450px]">
+            <img
+                    id="hero-image"
+                    src={club.image}
+                    class="w-full h-full object-cover"
+                    alt={club.name}
+            />
+            <div class="absolute inset-0 bg-slate-900/80"></div>
+
+            <!-- ZURÜCK BUTTON (Absolut Oben Links) -->
+            <div class="absolute top-4 left-4 sm:top-8 sm:left-8 z-30">
+                <a href="/vereine" class="inline-flex items-center gap-2 text-white hover:text-red-400 font-bold uppercase tracking-wider transition px-4 py-2.5 rounded-full bg-slate-900/40 hover:bg-slate-900/80 border border-white/10 backdrop-blur-md text-xs sm:text-sm">
+                    <ArrowLeft size={16} className="text-white" /> <span class="hidden sm:inline">Alle Vereine</span>
+                </a>
+            </div>
+
+            <div class="absolute inset-0 flex flex-col justify-center items-center px-4 text-center">
+                <div class="max-w-6xl animate-fade-in-up flex flex-col items-center">
+
+                    <!-- VEREINSWAPPEN / LOGO -->
+                    <div class="mb-8 relative group flex justify-center items-center">
+                        {/* Logo Bild: Groß und mit Schatten, kein Rahmen */}
+                        <img
+                                id="club-logo"
+                                src={`${club.logo}`}
+                                alt={`${club.name} Wappen`}
+                                class="w-32 h-32 object-contain drop-shadow-2xl transform transition duration-500 group-hover:scale-105"
+                        />
+                        {/* Fallback (Nur sichtbar wenn Bild fehlt per JS) */}
+                        <div id="club-logo-fallback" class="hidden w-32 h-32 bg-white/10 backdrop-blur-md rounded-full items-center justify-center border-2 border-white/20 shadow-2xl">
+                            <Shield size={40} className="text-white/50" />
+                        </div>
+                    </div>
+
+                    <h1 class="text-4xl md:text-6xl font-black text-white mb-3 tracking-tight uppercase shadow-sm">{club.name}</h1>
+
+                    <div class="flex flex-wrap justify-center items-center gap-4 text-lg text-slate-100 font-medium">
+                        <span class="flex items-center gap-2 bg-red-700 px-3 py-0.5 rounded text-white text-sm uppercase tracking-wide shadow-sm">{club.district}</span>
+                        {club.address && <span class="opacity-90">{club.address}</span>}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTAINER -->
+        <div class="max-w-6xl mx-auto px-4 -mt-8 sm:-mt-12 md:-mt-16 relative z-10 space-y-6">
+
+            <!-- 1. INTRO & KONTAKT -->
+            <div class="bg-white rounded-xl shadow-lg border-l-4 border-red-700 p-6 md:p-8">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2">
+                        <h2 class="text-xl font-black text-slate-900 mb-3 uppercase tracking-wide flex items-center gap-2">
+                            Über uns
+                        </h2>
+                        {club.description && (
+                                <p class="text-slate-700 leading-relaxed mb-5 text-sm md:text-base font-medium">
+                                    {club.description}
+                                </p>
+                        )}
+
+                        {/* Redirect Button für pausierte Vereine */}
+                        {club.redirectTo && (
+                                <a href={`/vereine/${club.redirectTo}`} class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md text-sm uppercase tracking-wide mb-5">
+                                    Zu Wien Thach Su <ChevronRight size={16} />
+                                </a>
+                        )}
+
+                        {/* Fit für Österreich nur anzeigen wenn nicht explizit ausgeschlossen */}
+                        {club.id !== 'hanh-phuc-long' && club.id !== 'wien-thuy-xa' && club.id !== 'wien-duong-lang' && (
+                                <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 flex gap-3 items-center">
+                                    <div class="bg-white p-2 rounded-full shadow-sm shrink-0 text-red-700 border border-slate-200">
+                                        <Award size={24} />
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 text-sm">Fit für Österreich</h4>
+                                        <p class="text-[11px] xs:text-xs sm:text-sm text-slate-600 leading-snug mt-1">
+                                            Qualitätsgeprüftes Training ("Richtig Fit mit Krafttraining") unter technischer Leitung von Minh Su Florin Fraga.
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+                            </div>
+
+                            <div class="md:col-span-1 border-t md:border-t-0 md:border-l border-slate-200 pt-6 md:pt-0 md:pl-8 flex flex-col justify-center gap-4">
+                                <div>
+                                    <span class="block text-xs text-slate-500 font-black uppercase tracking-widest mb-1">Leitung</span>
+                                    <span class="flex items-center gap-2 font-bold text-slate-900 text-lg">
+                                <User size={20} className="text-red-700"/> {club.trainer}
+                            </span>
+                                </div>
+                                <a href={`mailto:${contactEmail}?subject=Probetraining ${club.name}`} class="w-full bg-slate-900 hover:bg-red-700 text-white font-bold py-3.5 rounded-lg transition shadow-md flex items-center justify-center gap-2 text-sm uppercase tracking-wide cursor-pointer">
+                                    Probetraining vereinbaren <ChevronRight size={16} className="ml-1" />
+                                </a>
+                            </div>
+                            </div>
+                            </div>
+
+                            <!-- 2. TRAININGSZEITEN (DYNAMISCHES GRID) -->
+                        {hasTrainings && (
+                                <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                                    <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2">
+                                        <h3 class="font-black text-slate-900 flex items-center gap-2 uppercase tracking-wide text-sm md:text-base">
+                                            <Clock className="text-red-700" size={20} /> Trainingszeiten
+                                        </h3>
+                                        <span class="text-xs font-bold bg-white px-2 py-1 rounded border border-slate-300 text-slate-700">Bitte 10 Min. früher kommen</span>
+                                    </div>
+
+                                    <div class="p-6 bg-slate-50/50">
+                                        <div class={`grid gap-6 md:auto-rows-fr ${gridClass}`}>
+                                            {Object.entries(groupedDays).map(([day, slots]) => (
+                                                    <div class={`bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:h-full border-t-4 border-t-red-600 ${getCardColSpan(slots)}`}>
+                                                        <div class="px-5 py-3 border-b border-slate-200 bg-slate-100 flex items-center justify-between">
+                                                            <span class="font-black text-slate-800 uppercase tracking-wider text-sm">{day}</span>
+                                                            {slots.length > 2 && <span class="text-[10px] bg-white border border-slate-200 text-red-700 px-2 rounded-full font-bold shadow-sm">{slots.length} Einheiten</span>}
+                                                        </div>
+
+                                                        <div class={`p-5 flex-grow ${getContentGridClass(slots)}`}>
+                                                            {slots.map((slot: any) => (
+                                                                    <div class="flex flex-col gap-1.5 pb-3 last:pb-0 border-b border-dashed border-slate-100 last:border-0 last:border-b-0">
+                                                                        <div class="flex items-center gap-2">
+                                                    <span class="font-mono font-bold text-slate-900 text-base bg-slate-50 px-3 py-1 rounded border border-slate-200 shadow-sm">
+                                                        {slot.time}
+                                                    </span>
+                                                                        </div>
+                                                                        <p class="text-sm text-slate-600 font-medium leading-snug pl-1">{slot.group}</p>
+                                                                    </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                        )}
+
+                        <!-- 3. PREISE (NUR WENN VORHANDEN) -->
+                        {hasPrices && club.prices && (
+                                <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                                    <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                                        <h3 class="font-black text-slate-900 flex items-center gap-2 uppercase tracking-wide text-sm md:text-base">
+                                            <Wallet className="text-red-700" size={20} /> Semesterbeitrag
+                                        </h3>
+                                        <span class="text-xs font-bold text-slate-700 bg-white border border-slate-300 px-2 py-1 rounded">5 Monate</span>
+                                    </div>
+
+                                    <div class="p-6 md:p-8">
+                                        <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                                            {/* Kinder */}
+                                            {club.prices.kids.length > 0 && (
+                                                    <div>
+                                                        <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest mb-3 border-b-2 border-red-600 w-fit pb-1">Kinder (bis 13 J.)</h4>
+                                                        <ul class="text-sm space-y-0 border border-slate-200 rounded-lg overflow-hidden">
+                                                            {club.prices.kids.map((p: any, i: number) => (
+                                                                    <li class={`flex justify-between p-3 border-b border-slate-200 items-center last:border-0 ${i % 2 === 0 ? 'bg-slate-50' : 'bg-white'}`}>
+                                                                        <span class="text-slate-700 font-medium">{p.label}</span>
+                                                                        <span class="font-black text-slate-900 text-lg">{p.value}</span>
+                                                                    </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                            )}
+
+                                            {/* Erwachsene */}
+                                            {club.prices.adults.length > 0 && (
+                                                    <div>
+                                                        <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest mb-3 border-b-2 border-red-600 w-fit pb-1">Jugend & Erw.</h4>
+                                                        <ul class="text-sm space-y-0 border border-slate-200 rounded-lg overflow-hidden">
+                                                            {club.prices.adults.map((p: any, i: number) => (
+                                                                    <li class={`flex justify-between p-3 border-b border-slate-200 items-center last:border-0 ${i % 2 === 0 ? 'bg-slate-50' : 'bg-white'}`}>
+                                                                        <span class="text-slate-700 font-medium">{p.label}</span>
+                                                                        <span class="font-black text-slate-900 text-lg">{p.value}</span>
+                                                                    </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                            )}
+                                        </div>
+                                        {club.prices.info && (
+                                                <div class="mt-6 text-center">
+                                                    <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">{club.prices.info}</span>
+                                                </div>
+                                        )}
+                                    </div>
+                                </div>
+                        )}
+
+                        <!-- 4. ZAHLUNG (NUR WENN VORHANDEN) -->
+                        {hasBank && (
+                                <div class="bg-white rounded-xl shadow-md border-l-4 border-slate-800 p-6 md:p-8">
+                                    <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                                        <div class="p-2 bg-slate-100 rounded text-slate-800"><CreditCard size={20}/></div>
+                                        <h3 class="font-black text-slate-900 uppercase tracking-wide">Bankverbindung</h3>
+                                    </div>
+
+                                    <div class="grid lg:grid-cols-2 gap-8">
+                                        {/* Linke Seite: Konto */}
+                                        <div class="space-y-4">
+                                            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                                                <span class="text-xs text-slate-500 font-bold uppercase tracking-widest">Empfänger</span>
+                                                <span class="font-bold text-slate-900 text-right">{club.bankName}</span>
+                                            </div>
+
+                                            <div>
+                                                <p class="text-xs text-slate-500 font-bold uppercase tracking-widest mb-1.5">IBAN (Österreich)</p>
+                                                <div class="flex flex-col gap-2">
+                                                    <div class="flex items-center gap-2 w-full">
+                                                        <p class="font-mono text-base sm:text-xl md:text-2xl font-bold text-slate-900 tracking-wider sm:tracking-widest break-words bg-slate-50 px-3 sm:px-4 py-2 rounded border border-slate-200 w-full">
+                                                            {club.iban}
+                                                        </p>
+                                                        <button
+                                                                id="iban-copy-btn"
+                                                                class="p-2 sm:p-3 bg-white hover:bg-red-600 hover:text-white text-slate-600 border border-slate-200 rounded transition-all duration-300 shrink-0 shadow-sm cursor-pointer group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12"
+                                                                onclick={`copyToClipboard('${club.iban}')`}
+                                                                title="Kopieren"
+                                                                type="button"
+                                                        >
+                                                            <span id="icon-copy" class="group-hover:scale-110 transition-transform block"><Copy size={20}/></span>
+                                                            <span id="icon-check" class="hidden text-white scale-0 transition-transform duration-300"><Check size={20}/></span>
+                                                        </button>
+                                                    </div>
+                                                    <p id="copy-feedback" class="text-xs font-bold text-green-600 h-4 opacity-0 transition-opacity duration-300 pl-1">IBAN erfolgreich kopiert!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Rechte Seite: Verwendungszweck */}
+                                        <div class="bg-blue-50 p-5 rounded-lg border border-blue-100 flex flex-col justify-center">
+                                            <h4 class="font-bold text-blue-900 text-xs mb-2 uppercase tracking-wide flex items-center gap-1.5">
+                                                <Info size={16} className="text-blue-700"/> Verwendungszweck (Pflicht)
+                                            </h4>
+                                            <p class="text-sm text-blue-800 mb-3 leading-relaxed">
+                                                Damit wir die Zahlung zuordnen können, geben Sie bitte an:
+                                            </p>
+                                            <div class="font-mono bg-white p-3 rounded border border-blue-200 text-slate-800 text-sm shadow-sm font-medium mb-1">
+                                                Passnr., Nachname Vorname, Anzahl Trainings
+                                            </div>
+                                            <div class="mt-3 flex items-center gap-2">
+                                                <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Beispiel:</span>
+                                                <span class="text-sm font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded inline-block">
+                                    A387 Mustermann Max 2xWo
+                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        )}
+
+                        {/* 5. ANFAHRT (GOOGLE MAPS EMBED) */}
+                        {club.googleMapsLink && (
+                                <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                                    <div class="relative h-96 w-full bg-slate-100 group">
+                                        {/* Google Maps Embed Iframe
+                            Note: We use the embed API with the address from club data.
+                            Since we don't have a specific place ID or API key, we construct a search query embed.
+                            Ideally, one should use a proper API key for production or get the specific embed HTML from Google Maps.
+                            Here we use a generic query approach.
+                         */}
+                                        <iframe
+                                                width="100%"
+                                                height="100%"
+                                                frameborder="0"
+                                                style="border:0"
+                                                loading="lazy"
+                                                allowfullscreen
+                                                referrerpolicy="no-referrer-when-downgrade"
+                                                src={`https://maps.google.com/maps?q=${encodeURIComponent(club.address + ', ' + club.district)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                                                class="absolute inset-0 w-full h-full transition-all duration-700"
+                                        >
+                                        </iframe>
+                                    </div>
+
+                                    {/* Info Bar unter der Karte */}
+                                    <div class="px-6 py-4 bg-white border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="p-2 bg-slate-100 rounded-full text-red-600"><MapPin size={20} /></div>
+                                            <div>
+                                                <p class="font-bold text-slate-900 text-sm">{club.locationDetail}</p>
+                                                <p class="text-xs text-slate-500">{club.address}, {club.district}</p>
+                                            </div>
+                                        </div>
+
+                                        <a
+                                                href={club.googleMapsLink}
+                                                target="_blank"
+                                                class="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg shadow-md flex items-center gap-2 transition transform hover:scale-105 font-bold text-sm cursor-pointer whitespace-nowrap"
+                                        >
+                                            Route planen <ArrowLeft size={16} className="rotate-180" />
+                                        </a>
+                                    </div>
+                                </div>
+                        )}
+
+                        <!-- 6. ANDERE VEREINE KARUSSELL (Mit Buttons) -->
+                        <div class="pt-8 border-t border-slate-200">
+                            <div class="mb-6 px-2">
+                                <h3 class="text-xl font-bold text-slate-400 uppercase tracking-widest">Andere Vereine entdecken</h3>
+                            </div>
+
+                            <!-- Wrapper für Buttons und Slider -->
+                            <div class="relative px-2 sm:px-0">
+                                <div class="flex items-center gap-4">
+                                    <!-- Navigation Buttons -->
+                                    <button id="slide-left" class="hidden md:flex p-3 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition shadow-sm cursor-pointer shrink-0 z-10">
+                                        <ChevronLeft size={24} />
+                                    </button>
+
+                                    <!-- Slider -->
+                                    <div id="club-slider" class="flex overflow-x-auto gap-4 pb-4 px-1 scrollbar-hide snap-x snap-mandatory scroll-smooth w-full">
+                                        {otherClubs.map((oc: any) => (
+                                                <a href={`/vereine/${oc.id}`} class="min-w-[92%] sm:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)] snap-center bg-white rounded-xl p-5 border border-slate-200 hover:border-red-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/card flex flex-col justify-between shrink-0 h-32 relative overflow-hidden">
+                                                    <div class="z-10 relative">
+                                                        <h4 class="font-bold text-slate-900 group-hover/card:text-red-700 transition text-lg mb-1">{oc.name}</h4>
+                                                        <p class="text-xs text-slate-500 flex items-center gap-1.5"><MapPin size={12}/> {oc.district}</p>
+                                                    </div>
+                                                    <div class="mt-auto pt-3 border-t border-slate-50 flex items-center text-xs font-bold text-slate-400 group-hover/card:text-red-700 transition relative z-10">
+                                                        Zum Verein <ChevronRight size={14} className="ml-auto transform group-hover/card:translate-x-1 transition-transform" />
+                                                    </div>
+                                                    <div class="absolute inset-0 bg-red-50 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+                                                </a>
+                                        ))}
+                                    </div>
+
+                                    <!-- Navigation Buttons -->
+                                    <button id="slide-right" class="hidden md:flex p-3 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition shadow-sm cursor-pointer shrink-0 z-10">
+                                        <ChevronRight size={24} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .scrollbar-hide::-webkit-scrollbar {
+                        display: none;
+                    }
+                    .scrollbar-hide {
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                    }
+                </style>
+
+                <script is:inline>
+                    // JS für Logo Fallback
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const logoImg = document.getElementById('club-logo');
+                        const logoFallback = document.getElementById('club-logo-fallback');
+                        const heroImg = document.getElementById('hero-image');
+
+                        if (logoImg && logoFallback) {
+                            logoImg.addEventListener('error', () => {
+                                logoImg.style.display = 'none';
+                                logoFallback.classList.remove('hidden');
+                                logoFallback.style.display = 'flex';
+                            });
+                        }
+
+                        if (heroImg) {
+                            heroImg.addEventListener('error', () => {
+                                heroImg.src = 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=2000&auto=format&fit=crop';
+                            });
+                        }
+                    });
+
+                    // IBAN Copy Logic
+                    // @ts-ignore
+                    function copyToClipboard(text) {
+                        const btn = document.getElementById('iban-copy-btn');
+                        const iconCopy = document.getElementById('icon-copy');
+                        const iconCheck = document.getElementById('icon-check');
+                        const feedback = document.getElementById('copy-feedback');
+
+                        const copyText = async () => {
+                            try {
+                                await navigator.clipboard.writeText(text);
+                                showSuccessState(btn, iconCopy, iconCheck, feedback);
+                            } catch (err) {
+                                const textArea = document.createElement("textarea");
+                                textArea.value = text;
+                                document.body.appendChild(textArea);
+                                textArea.focus();
+                                textArea.select();
+                                try {
+                                    // @ts-ignore
+                                    document.execCommand('copy');
+                                    showSuccessState(btn, iconCopy, iconCheck, feedback);
+                                } catch (err) {
+                                    console.error('Fallback failed', err);
+                                }
+                                document.body.removeChild(textArea);
+                            }
+                        };
+                        copyText();
+                    }
+
+                    function showSuccessState(btn, iconCopy, iconCheck, feedback) {
+                        btn.classList.add('bg-red-600', 'border-red-600', 'text-white');
+                        btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200', 'hover:bg-red-600', 'hover:text-white');
+
+                        iconCopy.classList.add('hidden');
+                        iconCheck.classList.remove('hidden');
+                        setTimeout(() => iconCheck.classList.remove('scale-0'), 50);
+
+                        if(feedback) feedback.classList.remove('opacity-0');
+
+                        setTimeout(() => {
+                            btn.classList.remove('bg-red-600', 'border-red-600', 'text-white');
+                            btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200', 'hover:bg-red-600', 'hover:text-white');
+
+                            iconCheck.classList.add('scale-0');
+                            setTimeout(() => {
+                                iconCheck.classList.add('hidden');
+                                iconCopy.classList.remove('hidden');
+                            }, 150);
+
+                            if(feedback) feedback.classList.add('opacity-0');
+                        }, 3000);
+                    }
+
+                    // Slider Logic
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const slider = document.getElementById('club-slider');
+                        const leftBtn = document.getElementById('slide-left');
+                        const rightBtn = document.getElementById('slide-right');
+
+                        if(slider && leftBtn && rightBtn) {
+                            leftBtn.addEventListener('click', () => {
+                                const firstCard = slider.firstElementChild;
+                                if(!firstCard) return;
+
+                                const cardWidth = firstCard.getBoundingClientRect().width;
+                                const gap = 16;
+                                const scrollAmount = cardWidth + gap;
+
+                                if(slider.scrollLeft <= 10) {
+                                    slider.scrollTo({ left: slider.scrollWidth, behavior: 'auto' });
+                                    requestAnimationFrame(() => {
+                                        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                                    });
+                                } else {
+                                    slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                                }
+                            });
+
+                            rightBtn.addEventListener('click', () => {
+                                const firstCard = slider.firstElementChild;
+                                if(!firstCard) return;
+
+                                const cardWidth = firstCard.getBoundingClientRect().width;
+                                const gap = 16;
+                                const scrollAmount = cardWidth + gap;
+
+                                if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+                                    slider.scrollTo({ left: 0, behavior: 'auto' });
+                                    requestAnimationFrame(() => {
+                                        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                                    });
+                                } else {
+                                    slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                                }
+                            });
+                        }
+                    });
+                </script>
+</Layout>

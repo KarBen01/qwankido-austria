@@ -1,0 +1,236 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {Shield, Lock, Eye, Mail, Map} from 'lucide-react';
+---
+
+<Layout title="Datenschutzerklärung">
+    <div class="bg-slate-50 min-h-screen py-12 md:py-20">
+        <div class="max-w-4xl mx-auto px-4">
+
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center justify-center p-3 bg-red-100 text-red-700 rounded-2xl mb-4">
+                    <Shield size={32}/>
+                </div>
+                <h1 class="text-2xl sm:text-3xl md:text-5xl font-black text-slate-900 mb-4">Datenschutzerklärung</h1>
+                <p class="text-slate-500 max-w-2xl mx-auto">
+                    Transparenz ist uns wichtig. Hier erfahren Sie, wie wir Ihre Daten schützen und verarbeiten.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 sm:p-8 md:p-12 shadow-sm border border-slate-200 space-y-12">
+
+                <!-- 1. Allgemeines -->
+                <section>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-3 mb-4 pb-2 border-b border-slate-100">
+                        <span class="bg-slate-100 text-slate-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">1</span>
+                        Allgemeines & Verantwortlicher
+                    </h2>
+                    <div class="prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base">
+                        <p>
+                            Die Website <strong>www.qwankido.at</strong> wird von dem Fachverband <strong>Qwan Ki Do
+                            Austria</strong> (ZVR: 108300119) als Verantwortlicher betrieben.
+                        </p>
+                        <p class="mt-2">
+                            Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Wir verarbeiten Ihre
+                            Daten daher ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TKG 2003).
+                        </p>
+
+                        <div class="mt-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <h3 class="font-bold text-slate-800 text-sm mb-2">Hosting</h3>
+                            <p class="text-xs text-slate-500">
+                                Die Website wird auf einem Server innerhalb der EU (Deutschland) gespeichert. Der
+                                Anbieter ist:<br/>
+                                <strong>ALL-INKL.COM – Neue Medien Münnich</strong><br/>
+                                Hauptstraße 68 | D-02742 Friedersdorf<br/>
+                                <a href="https://all-inkl.com/datenschutzinformationen/" target="_blank"
+                                   class="text-red-700 hover:underline">Datenschutzinformationen des Providers</a>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Gespeicherte Daten -->
+                <section>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-3 mb-4 pb-2 border-b border-slate-100">
+                        <span class="bg-slate-100 text-slate-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">2</span>
+                        Gespeicherte Daten & Technik
+                    </h2>
+                    <div class="prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base space-y-4">
+
+                        <div>
+                            <h3 class="font-bold text-slate-800 mb-1">Server-Logfiles</h3>
+                            <p>
+                                Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten
+                                Server-Log Files, die Ihr Browser automatisch an uns übermittelt (Browsertyp,
+                                Betriebssystem, Referrer URL, IP-Adresse, Uhrzeit).
+                                Diese Daten dienen der Systemsicherheit und technischen Administration. Eine
+                                Zusammenführung mit anderen Datenquellen wird nicht vorgenommen.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-slate-800 mb-1">Cookies</h3>
+                            <p>
+                                Unsere Website verwendet moderne Technologien, um nutzerfreundlich zu sein. Da diese
+                                Seite statisch ausgeliefert wird, setzen wir <strong>keine Tracking-Cookies</strong> für
+                                Werbezwecke.
+                                Essenzielle Cookies können jedoch von eingebundenen Drittanbietern (siehe unten) gesetzt
+                                werden, um die Funktionalität (z.B. Kartenanzeige, Newsletter-Formular) zu
+                                gewährleisten.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-slate-800 mb-1">Soziale Netzwerke & Links</h3>
+                            <p>
+                                Wir verwenden auf dieser Website <strong>keine Social-Media-Plugins</strong> (wie die
+                                klassische Facebook "Like-Box"), die schon beim Laden der Seite Daten an Dritte
+                                übertragen.
+                                Alle Icons zu Facebook oder Instagram sind reine Verlinkungen. Erst wenn Sie aktiv
+                                darauf klicken, werden Sie zum jeweiligen Anbieter weitergeleitet. Ab diesem Zeitpunkt
+                                gelten die Datenschutzbestimmungen der jeweiligen Plattform.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Newsletter -->
+                <section>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-3 mb-4 pb-2 border-b border-slate-100">
+                        <span class="bg-slate-100 text-slate-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">3</span>
+                        Newsletter
+                    </h2>
+                    <div class="prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base space-y-4">
+                        <div class="flex items-start gap-4 bg-red-50 p-4 rounded-xl border border-red-100">
+                            <Mail className="text-red-600 shrink-0 mt-1" size={20}/>
+                            <div>
+                                <p class="text-red-900 font-medium text-sm">
+                                    Wenn Sie sich für unseren Newsletter anmelden, verarbeiten wir Ihre E-Mail-Adresse,
+                                    um Sie über Trainings, Termine und Vereinsaktivitäten zu informieren.
+                                </p>
+                            </div>
+                        </div>
+
+                        <p>
+                            Die Anmeldung ist freiwillig. Wir verwenden das <strong>Double-Opt-In Verfahren</strong>:
+                            Nach der Anmeldung erhalten Sie eine E-Mail, in der Sie die Registrierung bestätigen müssen.
+                        </p>
+
+                        <div>
+                            <h3 class="font-bold text-slate-800 mb-1">Versand via Mailjet</h3>
+                            <p>
+                                Für den Versand nutzen wir den Dienstleister <strong>Mailjet SAS</strong> (Paris,
+                                Frankreich).
+                                Ihre Daten werden auf Servern innerhalb der EU gespeichert. Wir haben mit Mailjet einen
+                                Auftragsverarbeitungsvertrag abgeschlossen, der sicherstellt, dass Ihre Daten geschützt
+                                und nicht an Dritte weitergegeben werden.
+                            </p>
+                        </div>
+
+                        <p>
+                            Sie können Ihre Einwilligung jederzeit widerrufen und den Newsletter über den Link am Ende
+                            jeder E-Mail abbestellen.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 4. Google Maps (NEU) -->
+                <section>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-3 mb-4 pb-2 border-b border-slate-100">
+                        <span class="bg-slate-100 text-slate-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">4</span>
+                        Google Maps
+                    </h2>
+                    <div class="prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base space-y-4">
+                        <div class="flex items-start gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <Map className="text-slate-600 shrink-0 mt-1" size={20}/>
+                            <div>
+                                <p class="text-slate-700 font-medium text-sm">
+                                    Auf unseren Vereinsseiten nutzen wir Google Maps (API) von Google Ireland Limited,
+                                    Gordon House, Barrow Street, Dublin 4, Irland, um geographische Informationen
+                                    (Standorte der Trainingshallen) visuell darzustellen.
+                                </p>
+                            </div>
+                        </div>
+
+                        <p>
+                            Bei der Nutzung von Google Maps werden von Google Daten über die Nutzung der Maps-Funktionen
+                            durch Besucher der Webseiten erhoben, verarbeitet und genutzt. Dazu gehört insbesondere Ihre
+                            IP-Adresse, die an Server von Google (auch in den USA) übertragen wird. Dies erfolgt
+                            unabhängig davon, ob Google ein Nutzerkonto bereitstellt, über das Sie eingeloggt sind, oder
+                            ob kein Nutzerkonto besteht.
+                        </p>
+                        <p>
+                            Die Nutzung von Google Maps erfolgt im Interesse einer ansprechenden Darstellung unserer
+                            Online-Angebote und an einer leichten Auffindbarkeit der von uns auf der Website angegebenen
+                            Orte. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar.
+                        </p>
+                        <p>
+                            Weitere Informationen über die Datenverarbeitung durch Google können Sie den <a
+                                href="https://policies.google.com/privacy?hl=de" target="_blank"
+                                class="text-red-700 hover:underline">Datenschutzhinweisen von Google</a> entnehmen.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 5. Facebook Page Plugin -->
+                <section>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-3 mb-4 pb-2 border-b border-slate-100">
+                        <span class="bg-slate-100 text-slate-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">5</span>
+                        Facebook Page Plugin
+                    </h2>
+                    <div class="prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base space-y-4">
+                        <p>
+                            Auf unserer Website verwenden wir das Facebook Page Plugin von Meta Platforms Ireland Limited,
+                            4 Grand Canal Square, Dublin 2, Irland, um Beiträge von unserer Facebook-Seite direkt anzuzeigen.
+                        </p>
+                        <p>
+                            Beim Laden des Plugins werden Daten an Facebook übertragen, darunter Ihre IP-Adresse und
+                            Informationen über Ihren Besuch auf unserer Seite. Wenn Sie in Ihrem Facebook-Account eingeloggt sind,
+                            kann Facebook Ihren Besuch Ihrem Profil zuordnen.
+                        </p>
+                        <p>
+                            Die Nutzung erfolgt zur ansprechenden Darstellung unserer Social-Media-Aktivitäten und stellt ein
+                            berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar.
+                        </p>
+                        <p>
+                            Weitere Informationen zur Datenverarbeitung durch Facebook finden Sie in der
+                            <a href="https://www.facebook.com/privacy/policy/" target="_blank" class="text-red-700 hover:underline">
+                                Datenschutzerklärung von Facebook
+                            </a>.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 6. Rechte -->
+                <section>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-3 mb-4 pb-2 border-b border-slate-100">
+                        <span class="bg-slate-100 text-slate-600 w-8 h-8 flex items-center justify-center rounded-full text-sm">6</span>
+                        Ihre Rechte
+                    </h2>
+                    <div class="prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base">
+                        <p>
+                            Ihnen stehen grundsätzlich die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung,
+                            Datenübertragbarkeit, Widerruf und Widerspruch zu.
+                        </p>
+                        <p class="mt-4">
+                            Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt oder
+                            Ihre datenschutzrechtlichen Ansprüche sonst in einer Weise verletzt worden sind,
+                            können Sie sich bei der Aufsichtsbehörde beschweren. In Österreich ist dies die
+                            Datenschutzbehörde.
+                        </p>
+                        <div class="mt-6 pt-6 border-t border-slate-100">
+                            <p class="font-bold text-slate-900">Kontakt für Datenschutzanfragen:</p>
+                            <a href="mailto:office@qwankido.at"
+                               class="text-red-700 hover:underline">office@qwankido.at</a>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="text-center mt-12 text-xs text-slate-400">
+                Stand: {new Date().getFullYear()} • Qwan Ki Do Austria
+            </div>
+        </div>
+    </div>
+</Layout>

@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Highlights from '../components/Highlights.jsx';
+import EventCard from '../components/EventCard.jsx';
+import TrainingChangeCard from '../components/TrainingChangeCard.jsx';
+import ImportantDateCard from '../components/ImportantDateCard.jsx';
+import ComingSoonCard from '../components/ComingSoonCard.jsx';
+import { Facebook } from 'lucide-react';
+import {
+    COMING_SOON,
+    getValidHighlights,
+    getUpcomingEvents,
+    getUpcomingTrainingChanges,
+    getUpcomingImportantDates
+} from '../data/siteData.js';
+---
+
+<Layout title="Aktuelles">
+    <div class="min-h-screen pt-12 pb-20 px-4 bg-slate-50">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Aktuelles & Termine</h1>
+                <p class="text-slate-600 max-w-2xl mx-auto">
+                    Alle News, Events und wichtige Informationen aus unseren Vereinen
+                </p>
+            </div>
+
+            <!-- Highlights Section -->
+            {getValidHighlights().length > 0 && (
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Wichtige Ankündigungen</h2>
+                    <Highlights highlights={getValidHighlights()} client:load/>
+                </section>
+            )}
+
+            <!-- Events Section -->
+            <section class="mb-16">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Kommende Events & Termine</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    {getUpcomingEvents().map((event) => (
+                        <EventCard event={event} client:load/>
+                    ))}
+                </div>
+            </section>
+
+            <!-- Training Changes Section -->
+            {getUpcomingTrainingChanges().length > 0 && (
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Training Änderungen</h2>
+                    <div class="grid gap-4">
+                        {getUpcomingTrainingChanges().map((change) => (
+                            <TrainingChangeCard change={change} client:load/>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            <!-- Important Dates Section -->
+            {getUpcomingImportantDates().length > 0 && (
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Wichtige Termine</h2>
+                    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {getUpcomingImportantDates().map((date) => (
+                            <ImportantDateCard date={date} client:load/>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            <!-- Coming Soon Section -->
+            {COMING_SOON.length > 0 && (
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Demnächst</h2>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        {COMING_SOON.map((item) => (
+                            <ComingSoonCard item={item} client:load/>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            <!-- Facebook Feed Section -->
+            <section class="mb-16">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Folge uns auf Facebook</h2>
+                    <p class="text-slate-600 mb-6">
+                        Für tägliche Updates und Community News
+                    </p>
+                    <a href="https://facebook.com/qwankidoaustria" target="_blank"
+                       class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-[#1877F2] hover:bg-[#166fe5] hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-900/20">
+                        <Facebook size={20}/>
+                        Folge uns auf Facebook
+                    </a>
+                </div>
+                <div class="w-full sm:w-[500px] sm:mx-auto">
+                    <div class="fb-page"
+                         data-href="https://www.facebook.com/qwankidoaustria"
+                         data-tabs="timeline,events"
+                         data-width="500"
+                         data-height="800"
+                         data-small-header="false"
+                         data-adapt-container-width="true"
+                         data-hide-cover="false"
+                         data-show-facepile="true">
+                        <blockquote cite="https://www.facebook.com/qwankidoaustria" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/qwankidoaustria"
+                               class="text-red-600 hover:underline font-semibold">
+                                Qwan Ki Do Austria auf Facebook
+                            </a>
+                        </blockquote>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <div class="mt-8 text-center">
+                <a href="/vereine" class="text-slate-600 hover:text-red-600 transition text-sm font-medium">
+                    ← Zurück zur Vereinsübersicht
+                </a>
+            </div>
+        </div>
+    </div>
+</Layout>

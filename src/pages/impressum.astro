@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {Mail, Phone, Globe, MapPin, Award, User} from 'lucide-react';
+
+const contactEmail = "office@qwankido.at";
+const presidentPhone = "+43 699 11321408";
+---
+
+<Layout title="Impressum & Kontakt">
+    <div class="bg-slate-50 min-h-screen py-16">
+        <div class="max-w-4xl mx-auto px-4">
+
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-2 text-center">Impressum</h1>
+            <p class="text-slate-500 text-center mb-12">Rechtliche Informationen & Kontakt</p>
+
+            <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
+
+                {/* LINKE SPALTE: MEDIENINHABER */}
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                        <div class="bg-slate-100 p-2.5 rounded-xl text-slate-700">
+                            <Award size={24}/>
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-900">Medieninhaber</h2>
+                    </div>
+
+                    <div class="space-y-4 flex-grow">
+                        <div>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Vereinsname</span>
+                            <p class="text-lg font-bold text-slate-900 leading-snug">
+                                Verein Fachverband <br/>Qwan Ki Do Austria
+                            </p>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">ZVR-Zahl</span>
+                            <p class="font-mono text-slate-700 bg-slate-50 px-3 py-1 rounded inline-block border border-slate-200">
+                                108300119
+                            </p>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Sitz</span>
+                            <p class="text-slate-700 flex items-center gap-2">
+                                <MapPin size={16}/>
+                                Wien, Österreich
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* RECHTE SPALTE: VERTRETUNG & KONTAKT */}
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                        <div class="bg-red-50 p-2.5 rounded-xl text-red-600">
+                            <User size={24}/>
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-900">Vertretung & Kontakt</h2>
+                    </div>
+
+                    <div class="space-y-6">
+                        <ul class="space-y-3">
+                            <li class="flex justify-between items-start border-b border-slate-50 pb-2">
+                                <span class="text-sm text-slate-500 font-medium">Präsidentin</span>
+                                <span class="text-sm font-bold text-slate-900 text-right">Manuela Fraga</span>
+                            </li>
+                            <li class="flex justify-between items-start border-b border-slate-50 pb-2">
+                                <span class="text-sm text-slate-500 font-medium">Vizepräsidentin</span>
+                                <span class="text-sm font-bold text-slate-900 text-right">Renate Winklbauer</span>
+                            </li>
+                            <li class="flex justify-between items-start pb-2">
+                                <span class="text-sm text-slate-500 font-medium">Sekretariat</span>
+                                <span class="text-sm font-bold text-slate-900 text-right">Vo Su Matei Capatu</span>
+                            </li>
+                        </ul>
+
+                        <div class="bg-slate-900 rounded-xl p-5 text-white space-y-3">
+                            <a href={`mailto:${contactEmail}`}
+                               class="flex items-center gap-3 hover:text-red-400 transition group">
+                                <Mail size={18} class="text-slate-400 group-hover:text-red-400"/>
+                                <span class="font-medium">{contactEmail}</span>
+                            </a>
+                            <a href={`tel:${presidentPhone}`}
+                               class="flex items-center gap-3 hover:text-red-400 transition group">
+                                <Phone size={18} class="text-slate-400 group-hover:text-red-400"/>
+                                <span class="font-medium">{presidentPhone}</span>
+                            </a>
+                            <a href="https://www.qwankido.at"
+                               class="flex items-center gap-3 hover:text-red-400 transition group">
+                                <Globe size={18} class="text-slate-400 group-hover:text-red-400"/>
+                                <span class="font-medium">www.qwankido.at</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-12 text-center text-xs text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                <p>
+                    Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit,
+                    Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</Layout>
