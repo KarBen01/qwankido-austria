@@ -1,5 +1,6 @@
 ---
-import {Facebook, Instagram} from 'lucide-react';
+import SimpleIcon from './SimpleIcon.jsx';
+import {siFacebook, siInstagram} from 'simple-icons';
 import wuqkdLogoImg from '../assets/images/wuqkd_logo.png';
 
 const BASE_URL = import.meta.env.BASE_URL;
@@ -31,9 +32,11 @@ const BASE_URL = import.meta.env.BASE_URL;
             <div>
                 <h4 class="text-white font-bold mb-4">Navigation</h4>
                 <ul class="space-y-3">
-                    <li><a href={`${BASE_URL}/vereine`} class="hover:text-red-500 transition block">Unsere Vereine</a></li>
+                    <li><a href={`${BASE_URL}/vereine`} class="hover:text-red-500 transition block">Unsere Vereine</a>
+                    </li>
                     <li><a href={`${BASE_URL}/trainer`} class="hover:text-red-500 transition block">Trainerteam</a></li>
-                    <li><a href={`${BASE_URL}/aktuelles`} class="hover:text-red-500 transition block">News & Termine</a></li>
+                    <li><a href={`${BASE_URL}/aktuelles`} class="hover:text-red-500 transition block">News & Termine</a>
+                    </li>
                 </ul>
             </div>
 
@@ -41,7 +44,8 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <h4 class="text-white font-bold mb-4">Rechtliches</h4>
                 <ul class="space-y-3">
                     <li><a href={`${BASE_URL}/impressum`} class="hover:text-red-500 transition block">Impressum</a></li>
-                    <li><a href={`${BASE_URL}/datenschutz`} class="hover:text-red-500 transition block">Datenschutz</a></li>
+                    <li><a href={`${BASE_URL}/datenschutz`} class="hover:text-red-500 transition block">Datenschutz</a>
+                    </li>
                     <li><a href="mailto:office@qwankido.at" class="hover:text-red-500 transition block">Kontakt
                         aufnehmen</a></li>
                 </ul>
@@ -58,11 +62,11 @@ const BASE_URL = import.meta.env.BASE_URL;
             <div class="flex gap-3">
                 <a href="https://facebook.com/qwankidoaustria" target="_blank"
                    class="hover:text-white hover:bg-blue-600 transition bg-slate-800 text-slate-400 p-2.5 rounded-lg">
-                    <Facebook size={18}/>
+                    <SimpleIcon icon={siFacebook} size={18} client:load/>
                 </a>
-                <a href="https://instagram.com/qwankidoaustria" target="_blank"
+                <a href="https://instagram.com/qwankido_at" target="_blank"
                    class="hover:text-white hover:bg-pink-600 transition bg-slate-800 text-slate-400 p-2.5 rounded-lg">
-                    <Instagram size={18}/>
+                    <SimpleIcon icon={siInstagram} size={18} client:load/>
                 </a>
             </div>
         </div>

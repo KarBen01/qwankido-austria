@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {Download, X, ExternalLink, PenTool, Scale, Shield, Camera, FileText, AlertCircle} from 'lucide-react';
+import {Download, X, ExternalLink, PenTool, Scale, Shield, Camera, FileText, AlertCircle, Phone} from 'lucide-react';
 
 const iconMap = {
     PenTool,
@@ -7,7 +7,8 @@ const iconMap = {
     Shield,
     Camera,
     FileText,
-    AlertCircle
+    AlertCircle,
+    Phone
 };
 
 export default function PDFCard({href, iconName, title, subtitle, colSpan = ""}) {
@@ -42,8 +43,8 @@ export default function PDFCard({href, iconName, title, subtitle, colSpan = ""})
     };
 
     const cardClasses = isDisabled
-        ? "flex items-start gap-4 p-5 rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 transition-all duration-300 group opacity-60 cursor-not-allowed"
-        : "flex items-start gap-4 p-5 rounded-xl bg-white hover:border-red-300 hover:shadow-lg border border-slate-200 transition-all duration-300 group cursor-pointer";
+        ? "flex items-center gap-4 p-5 rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 transition-all duration-300 group opacity-60 cursor-not-allowed"
+        : "flex items-center gap-4 p-5 rounded-xl bg-white hover:border-red-300 hover:shadow-lg border border-slate-200 transition-all duration-300 group cursor-pointer";
 
     return (
         <>
@@ -55,18 +56,18 @@ export default function PDFCard({href, iconName, title, subtitle, colSpan = ""})
             >
                 <div
                     className={`${isDisabled ? 'bg-slate-200' : 'bg-slate-100 group-hover:bg-red-50'} p-3 rounded-lg ${isDisabled ? 'text-slate-400' : 'text-slate-600 group-hover:text-red-600'} transition-colors shrink-0`}>
-                    <Icon size={22}/>
+                    <Icon size={20}/>
                 </div>
-                <div className="flex-1">
-                    <span
-                        className={`block font-bold text-base ${isDisabled ? 'text-slate-600' : 'text-slate-900 group-hover:text-red-700'} transition mb-1`}>
+                <div className="flex-1 min-w-0">
+                    <h3
+                        className={`font-bold text-base ${isDisabled ? 'text-slate-600' : 'text-slate-900 group-hover:text-red-700'} transition mb-0.5`}>
                         {title}
-                    </span>
-                    <span className="block text-xs text-slate-500">{subtitle}</span>
+                    </h3>
+                    <p className="text-xs text-slate-500">{subtitle}</p>
                 </div>
                 <Download
                     size={18}
-                    className={`${isDisabled ? 'text-slate-400' : 'text-slate-400 group-hover:text-red-600'} transition shrink-0 mt-1`}
+                    className={`${isDisabled ? 'text-slate-400' : 'text-slate-400 group-hover:text-red-600'} transition shrink-0`}
                 />
             </a>
 

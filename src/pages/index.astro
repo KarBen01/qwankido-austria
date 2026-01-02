@@ -4,10 +4,7 @@ import Highlights from '../components/Highlights.jsx';
 import EventCard from '../components/EventCard.jsx';
 import TrainingChangeCard from '../components/TrainingChangeCard.jsx';
 import PDFCard from '../components/PDFCard.jsx';
-import FacebookFeed from '../components/FacebookFeed.astro'; // NEW COMPONENT
 import {
-    EVENTS,
-    TRAINING_CHANGES,
     getValidHighlights,
     getUpcomingEvents,
     getUpcomingTrainingChanges
@@ -17,26 +14,17 @@ import {
 const aufnahmeformularPdf = '/documents/QKDATAufnahmeformular.pdf';
 const trainingsordnungPdf = '/documents/QKDATRahmenbedingungenTrainingsordnung.pdf';
 const datenschutzPdf = '/documents/QKDATDatenschutzbestimmung.pdf';
-const einwilligungPdf = '/documents/QKDATEinwilligung-Fotos-und-Notfallkontakt.pdf';
+const einwilligungFotosPdf = '/documents/QKDATEinwilligung-Fotos.pdf';
+const notfallkontaktPdf = '/documents/QKDATNotfallkontakt.pdf';
 
 import {
     ArrowRight,
-    MapPin,
     Calendar,
-    Download,
-    FileText,
-    Info,
-    Facebook,
-    ExternalLink,
-    ChevronRight,
-    Shield,
-    Camera,
-    Phone,
-    PenTool,
-    Scale,
     AlertCircle,
     Mail
 } from 'lucide-react';
+import SimpleIcon from '../components/SimpleIcon.jsx';
+import {siFacebook} from 'simple-icons';
 
 // --- PERFORMANCE UPDATE: Astro Assets ---
 import {Image} from 'astro:assets';
@@ -141,7 +129,7 @@ const validHighlights = getValidHighlights().map(highlight => ({
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12">
                 <div class="inline-flex items-center justify-center p-3 bg-red-50 rounded-2xl mb-4">
-                    <Facebook size={28} className="text-red-600"/>
+                    <SimpleIcon icon={siFacebook} size={28} className="text-red-600" client:load/>
                 </div>
                 <span class="text-red-600 font-bold tracking-wider uppercase text-sm mb-2 block">Community</span>
                 <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Neues aus den Vereinen</h2>
@@ -151,7 +139,7 @@ const validHighlights = getValidHighlights().map(highlight => ({
                 </p>
                 <a href="https://facebook.com/qwankidoaustria" target="_blank"
                    class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-[#1877F2] hover:bg-[#166fe5] hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-900/20">
-                    <Facebook size={20}/>
+                    <SimpleIcon icon={siFacebook} size={20} client:load/>
                     Folge uns auf Facebook
                 </a>
             </div>
@@ -188,7 +176,7 @@ const validHighlights = getValidHighlights().map(highlight => ({
     <section class="py-20 px-4 bg-slate-900 text-white relative overflow-hidden">
         <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
 
-        <div class="max-w-4xl mx-auto text-center relative z-10">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
             <div class="inline-flex items-center justify-center p-3 bg-slate-800 rounded-2xl mb-6 shadow-sm border border-slate-700">
                 <Mail size={32} class="text-red-500"/>
             </div>
@@ -198,7 +186,6 @@ const validHighlights = getValidHighlights().map(highlight => ({
                 dein Postfach.
             </p>
 
-            <div class="bg-white rounded-xl shadow-2xl p-2 max-w-xl mx-auto overflow-hidden">
                 <div class="overflow-hidden">
                     <iframe
                             data-w-type="embedded"
@@ -211,17 +198,16 @@ const validHighlights = getValidHighlights().map(highlight => ({
                     ></iframe>
                     <script type="text/javascript" src="https://app.mailjet.com/pas-nc-embedded-v1.js"></script>
                 </div>
-            </div>
             <p class="text-xs text-slate-500 mt-4">Kein Spam, jederzeit abbestellbar.</p>
         </div>
     </section>
 
     <section id="infos" class="py-20 px-4 bg-slate-50 border-t border-slate-200">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Infos zur Anmeldung</h2>
-                <div class="prose prose-slate mx-auto text-slate-600 leading-relaxed mb-8">
-                    <p>
+                <div class="prose prose-slate mx-auto text-slate-600 leading-relaxed mb-10">
+                    <p class="text-base md:text-lg">
                         Sie finden hier unsere Trainingsordnung, Datenschutzbestimmung, und Einwilligung zu Medien, die
                         für ein Trainieren in unseren Vereinen zur Kenntnis genommen werden müssen. Die Angabe eines
                         Notfallkontaktes ist wichtig, besonders bei jüngeren Trainierenden, falls sich zB bezüglich
@@ -230,20 +216,21 @@ const validHighlights = getValidHighlights().map(highlight => ({
                     </p>
                 </div>
 
-                <div class="bg-white border border-red-200 p-5 rounded-2xl shadow-sm inline-block">
-                    <p class="text-slate-800 font-medium flex flex-col sm:flex-row items-center justify-center gap-3 text-sm sm:text-base">
+                <div class="bg-white border border-red-200 p-6 rounded-2xl shadow-sm inline-block">
+                    <p class="text-slate-800 font-medium flex flex-col sm:flex-row items-center justify-center gap-4 text-sm sm:text-base">
                         <AlertCircle size={24} className="text-red-600 shrink-0"/>
                         <span>Bitte Formulare ausgedruckt zum Training mitbringen. Sie können uns die Formulare gerne auch eingescannt oder digital bearbeitet zukommen lassen.</span>
                     </p>
                 </div>
             </div>
 
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="grid sm:grid-cols-2 md:grid-cols-6 gap-4">
                 <PDFCard
                         href={`${BASE_URL}${aufnahmeformularPdf}`}
                         iconName="PenTool"
                         title="Aufnahmeformular"
                         subtitle="PDF Download"
+                        colSpan="md:col-span-2"
                 />
 
                 <PDFCard
@@ -251,6 +238,7 @@ const validHighlights = getValidHighlights().map(highlight => ({
                         iconName="Scale"
                         title="Trainingsordnung"
                         subtitle="PDF Download"
+                        colSpan="md:col-span-2"
                 />
 
                 <PDFCard
@@ -258,22 +246,23 @@ const validHighlights = getValidHighlights().map(highlight => ({
                         iconName="Shield"
                         title="Datenschutz"
                         subtitle="PDF Download"
+                        colSpan="md:col-span-2"
                 />
 
                 <PDFCard
-                        href={`${BASE_URL}${einwilligungPdf}`}
+                        href={`${BASE_URL}${einwilligungFotosPdf}`}
                         iconName="Camera"
-                        title="Einwilligung Fotos & Notfallkontakt"
-                        subtitle="PDF Download • Wichtig für Kinder & Medienfreigabe"
-                        colSpan="sm:col-span-2 md:col-span-3"
+                        title="Einwilligung Fotos"
+                        subtitle="PDF Download"
+                        colSpan="md:col-span-3"
                 />
 
                 <PDFCard
-                        href="#"
-                        iconName="FileText"
-                        title="Weiteres Dokument"
-                        subtitle="Folgt in Kürze"
-                        colSpan="sm:col-span-2 md:col-span-3"
+                        href={`${BASE_URL}${notfallkontaktPdf}`}
+                        iconName="Phone"
+                        title="Notfallkontakt"
+                        subtitle="PDF Download"
+                        colSpan="md:col-span-3"
                 />
             </div>
         </div>
